@@ -1,0 +1,1994 @@
+[
+  {
+    "step": 0,
+    "mode": "running",
+    "score": 0,
+    "clustersClearedCount": 0,
+    "boostMeter": 37.6,
+    "pulseActive": true,
+    "pointer": {
+      "x": 228,
+      "y": 158
+    }
+  },
+  {
+    "step": 1,
+    "mode": "running",
+    "score": 0,
+    "clustersClearedCount": 0,
+    "boostMeter": 45.2,
+    "pulseActive": true,
+    "pointer": {
+      "x": 226,
+      "y": 194
+    }
+  },
+  {
+    "step": 2,
+    "mode": "running",
+    "score": 0,
+    "clustersClearedCount": 0,
+    "boostMeter": 52.8,
+    "pulseActive": true,
+    "pointer": {
+      "x": 226,
+      "y": 194
+    }
+  },
+  {
+    "step": 3,
+    "mode": "running",
+    "score": 0,
+    "clustersClearedCount": 0,
+    "boostMeter": 60.5,
+    "pulseActive": true,
+    "pointer": {
+      "x": 226,
+      "y": 194
+    }
+  },
+  {
+    "step": 4,
+    "mode": "running",
+    "score": 0,
+    "clustersClearedCount": 0,
+    "boostMeter": 68.1,
+    "pulseActive": true,
+    "pointer": {
+      "x": 226,
+      "y": 194
+    }
+  },
+  {
+    "step": 5,
+    "mode": "running",
+    "score": 0,
+    "clustersClearedCount": 0,
+    "boostMeter": 75.7,
+    "pulseActive": true,
+    "pointer": {
+      "x": 226,
+      "y": 194
+    }
+  },
+  {
+    "step": 6,
+    "mode": "running",
+    "score": 0,
+    "clustersClearedCount": 0,
+    "boostMeter": 83.4,
+    "pulseActive": true,
+    "pointer": {
+      "x": 226,
+      "y": 194
+    }
+  },
+  {
+    "step": 7,
+    "mode": "running",
+    "score": 0,
+    "clustersClearedCount": 0,
+    "boostMeter": 91,
+    "pulseActive": true,
+    "pointer": {
+      "x": 226,
+      "y": 194
+    }
+  },
+  {
+    "step": 8,
+    "mode": "running",
+    "score": 0,
+    "clustersClearedCount": 0,
+    "boostMeter": 98.7,
+    "pulseActive": true,
+    "pointer": {
+      "x": 228,
+      "y": 180
+    }
+  },
+  {
+    "step": 9,
+    "mode": "running",
+    "score": 88,
+    "clustersClearedCount": 0,
+    "boostMeter": 100,
+    "pulseActive": true,
+    "pointer": {
+      "x": 228,
+      "y": 180
+    }
+  },
+  {
+    "step": 10,
+    "mode": "running",
+    "score": 88,
+    "clustersClearedCount": 0,
+    "boostMeter": 100,
+    "pulseActive": true,
+    "pointer": {
+      "x": 204,
+      "y": 158
+    }
+  },
+  {
+    "step": 11,
+    "mode": "running",
+    "score": 88,
+    "clustersClearedCount": 0,
+    "boostMeter": 100,
+    "pulseActive": true,
+    "pointer": {
+      "x": 204,
+      "y": 158
+    }
+  },
+  {
+    "step": 12,
+    "mode": "running",
+    "score": 180,
+    "clustersClearedCount": 0,
+    "boostMeter": 100,
+    "pulseActive": true,
+    "pointer": {
+      "x": 204,
+      "y": 158
+    }
+  },
+  {
+    "step": 13,
+    "mode": "running",
+    "score": 180,
+    "clustersClearedCount": 0,
+    "boostMeter": 100,
+    "pulseActive": true,
+    "pointer": {
+      "x": 228,
+      "y": 136
+    }
+  },
+  {
+    "step": 14,
+    "mode": "running",
+    "score": 276,
+    "clustersClearedCount": 0,
+    "boostMeter": 100,
+    "pulseActive": true,
+    "pointer": {
+      "x": 228,
+      "y": 136
+    }
+  },
+  {
+    "step": 15,
+    "mode": "running",
+    "score": 276,
+    "clustersClearedCount": 0,
+    "boostMeter": 100,
+    "pulseActive": false,
+    "pointer": {
+      "x": 252,
+      "y": 158
+    }
+  },
+  {
+    "step": 16,
+    "mode": "running",
+    "score": 276,
+    "clustersClearedCount": 0,
+    "boostMeter": 100,
+    "pulseActive": false,
+    "pointer": {
+      "x": 252,
+      "y": 158
+    }
+  },
+  {
+    "step": 17,
+    "mode": "running",
+    "score": 536,
+    "clustersClearedCount": 1,
+    "boostMeter": 100,
+    "pulseActive": false,
+    "pointer": {
+      "x": 252,
+      "y": 158
+    }
+  },
+  {
+    "step": 18,
+    "mode": "running",
+    "score": 536,
+    "clustersClearedCount": 1,
+    "boostMeter": 100,
+    "pulseActive": false,
+    "pointer": {
+      "x": 470,
+      "y": 154
+    }
+  },
+  {
+    "step": 19,
+    "mode": "running",
+    "score": 536,
+    "clustersClearedCount": 1,
+    "boostMeter": 100,
+    "pulseActive": false,
+    "pointer": {
+      "x": 470,
+      "y": 154
+    }
+  },
+  {
+    "step": 20,
+    "mode": "running",
+    "score": 536,
+    "clustersClearedCount": 1,
+    "boostMeter": 100,
+    "pulseActive": false,
+    "pointer": {
+      "x": 470,
+      "y": 154
+    }
+  },
+  {
+    "step": 21,
+    "mode": "running",
+    "score": 536,
+    "clustersClearedCount": 1,
+    "boostMeter": 100,
+    "pulseActive": false,
+    "pointer": {
+      "x": 470,
+      "y": 154
+    }
+  },
+  {
+    "step": 22,
+    "mode": "running",
+    "score": 536,
+    "clustersClearedCount": 1,
+    "boostMeter": 100,
+    "pulseActive": false,
+    "pointer": {
+      "x": 470,
+      "y": 154
+    }
+  },
+  {
+    "step": 23,
+    "mode": "running",
+    "score": 536,
+    "clustersClearedCount": 1,
+    "boostMeter": 100,
+    "pulseActive": false,
+    "pointer": {
+      "x": 470,
+      "y": 154
+    }
+  },
+  {
+    "step": 24,
+    "mode": "running",
+    "score": 536,
+    "clustersClearedCount": 1,
+    "boostMeter": 100,
+    "pulseActive": false,
+    "pointer": {
+      "x": 470,
+      "y": 154
+    }
+  },
+  {
+    "step": 25,
+    "mode": "running",
+    "score": 536,
+    "clustersClearedCount": 1,
+    "boostMeter": 100,
+    "pulseActive": false,
+    "pointer": {
+      "x": 470,
+      "y": 154
+    }
+  },
+  {
+    "step": 26,
+    "mode": "running",
+    "score": 536,
+    "clustersClearedCount": 1,
+    "boostMeter": 100,
+    "pulseActive": false,
+    "pointer": {
+      "x": 470,
+      "y": 154
+    }
+  },
+  {
+    "step": 27,
+    "mode": "running",
+    "score": 536,
+    "clustersClearedCount": 1,
+    "boostMeter": 100,
+    "pulseActive": false,
+    "pointer": {
+      "x": 470,
+      "y": 154
+    }
+  },
+  {
+    "step": 28,
+    "mode": "running",
+    "score": 536,
+    "clustersClearedCount": 1,
+    "boostMeter": 100,
+    "pulseActive": false,
+    "pointer": {
+      "x": 470,
+      "y": 154
+    }
+  },
+  {
+    "step": 29,
+    "mode": "running",
+    "score": 536,
+    "clustersClearedCount": 1,
+    "boostMeter": 100,
+    "pulseActive": false,
+    "pointer": {
+      "x": 470,
+      "y": 154
+    }
+  },
+  {
+    "step": 30,
+    "mode": "running",
+    "score": 536,
+    "clustersClearedCount": 1,
+    "boostMeter": 100,
+    "pulseActive": false,
+    "pointer": {
+      "x": 470,
+      "y": 154
+    }
+  },
+  {
+    "step": 31,
+    "mode": "running",
+    "score": 536,
+    "clustersClearedCount": 1,
+    "boostMeter": 100,
+    "pulseActive": false,
+    "pointer": {
+      "x": 470,
+      "y": 154
+    }
+  },
+  {
+    "step": 32,
+    "mode": "running",
+    "score": 536,
+    "clustersClearedCount": 1,
+    "boostMeter": 100,
+    "pulseActive": false,
+    "pointer": {
+      "x": 470,
+      "y": 154
+    }
+  },
+  {
+    "step": 33,
+    "mode": "running",
+    "score": 536,
+    "clustersClearedCount": 1,
+    "boostMeter": 100,
+    "pulseActive": false,
+    "pointer": {
+      "x": 470,
+      "y": 154
+    }
+  },
+  {
+    "step": 34,
+    "mode": "running",
+    "score": 536,
+    "clustersClearedCount": 1,
+    "boostMeter": 100,
+    "pulseActive": false,
+    "pointer": {
+      "x": 470,
+      "y": 154
+    }
+  },
+  {
+    "step": 35,
+    "mode": "running",
+    "score": 536,
+    "clustersClearedCount": 1,
+    "boostMeter": 100,
+    "pulseActive": false,
+    "pointer": {
+      "x": 470,
+      "y": 154
+    }
+  },
+  {
+    "step": 36,
+    "mode": "running",
+    "score": 536,
+    "clustersClearedCount": 1,
+    "boostMeter": 100,
+    "pulseActive": false,
+    "pointer": {
+      "x": 470,
+      "y": 154
+    }
+  },
+  {
+    "step": 37,
+    "mode": "running",
+    "score": 640,
+    "clustersClearedCount": 1,
+    "boostMeter": 100,
+    "pulseActive": false,
+    "pointer": {
+      "x": 470,
+      "y": 142
+    }
+  },
+  {
+    "step": 38,
+    "mode": "running",
+    "score": 640,
+    "clustersClearedCount": 1,
+    "boostMeter": 100,
+    "pulseActive": false,
+    "pointer": {
+      "x": 440,
+      "y": 120
+    }
+  },
+  {
+    "step": 39,
+    "mode": "running",
+    "score": 640,
+    "clustersClearedCount": 1,
+    "boostMeter": 100,
+    "pulseActive": false,
+    "pointer": {
+      "x": 440,
+      "y": 120
+    }
+  },
+  {
+    "step": 40,
+    "mode": "running",
+    "score": 640,
+    "clustersClearedCount": 1,
+    "boostMeter": 100,
+    "pulseActive": false,
+    "pointer": {
+      "x": 440,
+      "y": 120
+    }
+  },
+  {
+    "step": 41,
+    "mode": "running",
+    "score": 860,
+    "clustersClearedCount": 1,
+    "boostMeter": 100,
+    "pulseActive": false,
+    "pointer": {
+      "x": 440,
+      "y": 120
+    }
+  },
+  {
+    "step": 42,
+    "mode": "running",
+    "score": 860,
+    "clustersClearedCount": 1,
+    "boostMeter": 100,
+    "pulseActive": false,
+    "pointer": {
+      "x": 500,
+      "y": 120
+    }
+  },
+  {
+    "step": 43,
+    "mode": "running",
+    "score": 860,
+    "clustersClearedCount": 1,
+    "boostMeter": 100,
+    "pulseActive": false,
+    "pointer": {
+      "x": 500,
+      "y": 120
+    }
+  },
+  {
+    "step": 44,
+    "mode": "running",
+    "score": 860,
+    "clustersClearedCount": 1,
+    "boostMeter": 100,
+    "pulseActive": true,
+    "pointer": {
+      "x": 500,
+      "y": 120
+    }
+  },
+  {
+    "step": 45,
+    "mode": "running",
+    "score": 860,
+    "clustersClearedCount": 1,
+    "boostMeter": 100,
+    "pulseActive": true,
+    "pointer": {
+      "x": 500,
+      "y": 120
+    }
+  },
+  {
+    "step": 46,
+    "mode": "running",
+    "score": 860,
+    "clustersClearedCount": 1,
+    "boostMeter": 100,
+    "pulseActive": true,
+    "pointer": {
+      "x": 500,
+      "y": 120
+    }
+  },
+  {
+    "step": 47,
+    "mode": "running",
+    "score": 860,
+    "clustersClearedCount": 1,
+    "boostMeter": 100,
+    "pulseActive": true,
+    "pointer": {
+      "x": 500,
+      "y": 120
+    }
+  },
+  {
+    "step": 48,
+    "mode": "running",
+    "score": 860,
+    "clustersClearedCount": 1,
+    "boostMeter": 100,
+    "pulseActive": true,
+    "pointer": {
+      "x": 500,
+      "y": 120
+    }
+  },
+  {
+    "step": 49,
+    "mode": "running",
+    "score": 860,
+    "clustersClearedCount": 1,
+    "boostMeter": 100,
+    "pulseActive": true,
+    "pointer": {
+      "x": 500,
+      "y": 120
+    }
+  },
+  {
+    "step": 50,
+    "mode": "running",
+    "score": 1256,
+    "clustersClearedCount": 2,
+    "boostMeter": 100,
+    "pulseActive": true,
+    "pointer": {
+      "x": 500,
+      "y": 120
+    }
+  },
+  {
+    "step": 51,
+    "mode": "running",
+    "score": 1256,
+    "clustersClearedCount": 2,
+    "boostMeter": 98.9,
+    "pulseActive": true,
+    "pointer": {
+      "x": 684,
+      "y": 184
+    }
+  },
+  {
+    "step": 52,
+    "mode": "running",
+    "score": 1256,
+    "clustersClearedCount": 2,
+    "boostMeter": 98.9,
+    "pulseActive": true,
+    "pointer": {
+      "x": 684,
+      "y": 184
+    }
+  },
+  {
+    "step": 53,
+    "mode": "running",
+    "score": 1256,
+    "clustersClearedCount": 2,
+    "boostMeter": 98.9,
+    "pulseActive": true,
+    "pointer": {
+      "x": 684,
+      "y": 184
+    }
+  },
+  {
+    "step": 54,
+    "mode": "running",
+    "score": 1256,
+    "clustersClearedCount": 2,
+    "boostMeter": 98.9,
+    "pulseActive": true,
+    "pointer": {
+      "x": 684,
+      "y": 184
+    }
+  },
+  {
+    "step": 55,
+    "mode": "running",
+    "score": 1256,
+    "clustersClearedCount": 2,
+    "boostMeter": 98.9,
+    "pulseActive": true,
+    "pointer": {
+      "x": 684,
+      "y": 184
+    }
+  },
+  {
+    "step": 56,
+    "mode": "running",
+    "score": 1256,
+    "clustersClearedCount": 2,
+    "boostMeter": 98.9,
+    "pulseActive": true,
+    "pointer": {
+      "x": 684,
+      "y": 184
+    }
+  },
+  {
+    "step": 57,
+    "mode": "running",
+    "score": 1256,
+    "clustersClearedCount": 2,
+    "boostMeter": 100,
+    "pulseActive": true,
+    "pointer": {
+      "x": 684,
+      "y": 184
+    }
+  },
+  {
+    "step": 58,
+    "mode": "running",
+    "score": 1256,
+    "clustersClearedCount": 2,
+    "boostMeter": 100,
+    "pulseActive": false,
+    "pointer": {
+      "x": 684,
+      "y": 184
+    }
+  },
+  {
+    "step": 59,
+    "mode": "running",
+    "score": 1256,
+    "clustersClearedCount": 2,
+    "boostMeter": 100,
+    "pulseActive": false,
+    "pointer": {
+      "x": 684,
+      "y": 184
+    }
+  },
+  {
+    "step": 60,
+    "mode": "running",
+    "score": 1256,
+    "clustersClearedCount": 2,
+    "boostMeter": 100,
+    "pulseActive": false,
+    "pointer": {
+      "x": 684,
+      "y": 184
+    }
+  },
+  {
+    "step": 61,
+    "mode": "running",
+    "score": 1256,
+    "clustersClearedCount": 2,
+    "boostMeter": 100,
+    "pulseActive": false,
+    "pointer": {
+      "x": 684,
+      "y": 184
+    }
+  },
+  {
+    "step": 62,
+    "mode": "running",
+    "score": 1256,
+    "clustersClearedCount": 2,
+    "boostMeter": 100,
+    "pulseActive": false,
+    "pointer": {
+      "x": 684,
+      "y": 184
+    }
+  },
+  {
+    "step": 63,
+    "mode": "running",
+    "score": 1256,
+    "clustersClearedCount": 2,
+    "boostMeter": 100,
+    "pulseActive": false,
+    "pointer": {
+      "x": 684,
+      "y": 184
+    }
+  },
+  {
+    "step": 64,
+    "mode": "running",
+    "score": 1376,
+    "clustersClearedCount": 2,
+    "boostMeter": 100,
+    "pulseActive": false,
+    "pointer": {
+      "x": 682,
+      "y": 158
+    }
+  },
+  {
+    "step": 65,
+    "mode": "running",
+    "score": 1376,
+    "clustersClearedCount": 2,
+    "boostMeter": 100,
+    "pulseActive": false,
+    "pointer": {
+      "x": 706,
+      "y": 186
+    }
+  },
+  {
+    "step": 66,
+    "mode": "running",
+    "score": 1500,
+    "clustersClearedCount": 2,
+    "boostMeter": 100,
+    "pulseActive": false,
+    "pointer": {
+      "x": 706,
+      "y": 186
+    }
+  },
+  {
+    "step": 67,
+    "mode": "running",
+    "score": 1500,
+    "clustersClearedCount": 2,
+    "boostMeter": 100,
+    "pulseActive": false,
+    "pointer": {
+      "x": 730,
+      "y": 158
+    }
+  },
+  {
+    "step": 68,
+    "mode": "running",
+    "score": 1500,
+    "clustersClearedCount": 2,
+    "boostMeter": 100,
+    "pulseActive": false,
+    "pointer": {
+      "x": 730,
+      "y": 158
+    }
+  },
+  {
+    "step": 69,
+    "mode": "running",
+    "score": 1628,
+    "clustersClearedCount": 2,
+    "boostMeter": 100,
+    "pulseActive": false,
+    "pointer": {
+      "x": 730,
+      "y": 158
+    }
+  },
+  {
+    "step": 70,
+    "mode": "running",
+    "score": 1628,
+    "clustersClearedCount": 2,
+    "boostMeter": 100,
+    "pulseActive": false,
+    "pointer": {
+      "x": 706,
+      "y": 136
+    }
+  },
+  {
+    "step": 71,
+    "mode": "running",
+    "score": 1920,
+    "clustersClearedCount": 3,
+    "boostMeter": 100,
+    "pulseActive": false,
+    "pointer": {
+      "x": 706,
+      "y": 136
+    }
+  },
+  {
+    "step": 72,
+    "mode": "running",
+    "score": 1920,
+    "clustersClearedCount": 3,
+    "boostMeter": 100,
+    "pulseActive": false,
+    "pointer": {
+      "x": 700,
+      "y": 318
+    }
+  },
+  {
+    "step": 73,
+    "mode": "running",
+    "score": 1920,
+    "clustersClearedCount": 3,
+    "boostMeter": 100,
+    "pulseActive": false,
+    "pointer": {
+      "x": 700,
+      "y": 318
+    }
+  },
+  {
+    "step": 74,
+    "mode": "running",
+    "score": 1920,
+    "clustersClearedCount": 3,
+    "boostMeter": 100,
+    "pulseActive": false,
+    "pointer": {
+      "x": 700,
+      "y": 318
+    }
+  },
+  {
+    "step": 75,
+    "mode": "running",
+    "score": 1920,
+    "clustersClearedCount": 3,
+    "boostMeter": 100,
+    "pulseActive": false,
+    "pointer": {
+      "x": 700,
+      "y": 318
+    }
+  },
+  {
+    "step": 76,
+    "mode": "running",
+    "score": 1920,
+    "clustersClearedCount": 3,
+    "boostMeter": 100,
+    "pulseActive": false,
+    "pointer": {
+      "x": 700,
+      "y": 318
+    }
+  },
+  {
+    "step": 77,
+    "mode": "running",
+    "score": 1920,
+    "clustersClearedCount": 3,
+    "boostMeter": 100,
+    "pulseActive": false,
+    "pointer": {
+      "x": 700,
+      "y": 318
+    }
+  },
+  {
+    "step": 78,
+    "mode": "running",
+    "score": 1920,
+    "clustersClearedCount": 3,
+    "boostMeter": 100,
+    "pulseActive": false,
+    "pointer": {
+      "x": 700,
+      "y": 318
+    }
+  },
+  {
+    "step": 79,
+    "mode": "running",
+    "score": 1920,
+    "clustersClearedCount": 3,
+    "boostMeter": 100,
+    "pulseActive": false,
+    "pointer": {
+      "x": 700,
+      "y": 318
+    }
+  },
+  {
+    "step": 80,
+    "mode": "running",
+    "score": 1920,
+    "clustersClearedCount": 3,
+    "boostMeter": 100,
+    "pulseActive": false,
+    "pointer": {
+      "x": 700,
+      "y": 318
+    }
+  },
+  {
+    "step": 81,
+    "mode": "running",
+    "score": 1920,
+    "clustersClearedCount": 3,
+    "boostMeter": 100,
+    "pulseActive": false,
+    "pointer": {
+      "x": 700,
+      "y": 318
+    }
+  },
+  {
+    "step": 82,
+    "mode": "running",
+    "score": 1920,
+    "clustersClearedCount": 3,
+    "boostMeter": 100,
+    "pulseActive": false,
+    "pointer": {
+      "x": 700,
+      "y": 318
+    }
+  },
+  {
+    "step": 83,
+    "mode": "running",
+    "score": 1920,
+    "clustersClearedCount": 3,
+    "boostMeter": 100,
+    "pulseActive": false,
+    "pointer": {
+      "x": 700,
+      "y": 318
+    }
+  },
+  {
+    "step": 84,
+    "mode": "running",
+    "score": 1920,
+    "clustersClearedCount": 3,
+    "boostMeter": 100,
+    "pulseActive": false,
+    "pointer": {
+      "x": 700,
+      "y": 318
+    }
+  },
+  {
+    "step": 85,
+    "mode": "running",
+    "score": 1920,
+    "clustersClearedCount": 3,
+    "boostMeter": 100,
+    "pulseActive": false,
+    "pointer": {
+      "x": 700,
+      "y": 318
+    }
+  },
+  {
+    "step": 86,
+    "mode": "running",
+    "score": 1920,
+    "clustersClearedCount": 3,
+    "boostMeter": 100,
+    "pulseActive": false,
+    "pointer": {
+      "x": 700,
+      "y": 318
+    }
+  },
+  {
+    "step": 87,
+    "mode": "running",
+    "score": 1920,
+    "clustersClearedCount": 3,
+    "boostMeter": 100,
+    "pulseActive": true,
+    "pointer": {
+      "x": 700,
+      "y": 318
+    }
+  },
+  {
+    "step": 88,
+    "mode": "running",
+    "score": 1920,
+    "clustersClearedCount": 3,
+    "boostMeter": 100,
+    "pulseActive": true,
+    "pointer": {
+      "x": 700,
+      "y": 318
+    }
+  },
+  {
+    "step": 89,
+    "mode": "running",
+    "score": 1920,
+    "clustersClearedCount": 3,
+    "boostMeter": 100,
+    "pulseActive": true,
+    "pointer": {
+      "x": 720,
+      "y": 316
+    }
+  },
+  {
+    "step": 90,
+    "mode": "running",
+    "score": 2052,
+    "clustersClearedCount": 3,
+    "boostMeter": 100,
+    "pulseActive": true,
+    "pointer": {
+      "x": 720,
+      "y": 316
+    }
+  },
+  {
+    "step": 91,
+    "mode": "running",
+    "score": 2052,
+    "clustersClearedCount": 3,
+    "boostMeter": 100,
+    "pulseActive": true,
+    "pointer": {
+      "x": 718,
+      "y": 352
+    }
+  },
+  {
+    "step": 92,
+    "mode": "running",
+    "score": 2052,
+    "clustersClearedCount": 3,
+    "boostMeter": 100,
+    "pulseActive": true,
+    "pointer": {
+      "x": 718,
+      "y": 352
+    }
+  },
+  {
+    "step": 93,
+    "mode": "running",
+    "score": 2184,
+    "clustersClearedCount": 3,
+    "boostMeter": 100,
+    "pulseActive": true,
+    "pointer": {
+      "x": 718,
+      "y": 352
+    }
+  },
+  {
+    "step": 94,
+    "mode": "running",
+    "score": 2184,
+    "clustersClearedCount": 3,
+    "boostMeter": 100,
+    "pulseActive": true,
+    "pointer": {
+      "x": 758,
+      "y": 332
+    }
+  },
+  {
+    "step": 95,
+    "mode": "running",
+    "score": 2184,
+    "clustersClearedCount": 3,
+    "boostMeter": 100,
+    "pulseActive": true,
+    "pointer": {
+      "x": 754,
+      "y": 364
+    }
+  },
+  {
+    "step": 96,
+    "mode": "running",
+    "score": 2316,
+    "clustersClearedCount": 3,
+    "boostMeter": 100,
+    "pulseActive": true,
+    "pointer": {
+      "x": 754,
+      "y": 364
+    }
+  },
+  {
+    "step": 97,
+    "mode": "running",
+    "score": 2316,
+    "clustersClearedCount": 3,
+    "boostMeter": 100,
+    "pulseActive": true,
+    "pointer": {
+      "x": 758,
+      "y": 332
+    }
+  },
+  {
+    "step": 98,
+    "mode": "running",
+    "score": 2728,
+    "clustersClearedCount": 4,
+    "boostMeter": 100,
+    "pulseActive": true,
+    "pointer": {
+      "x": 758,
+      "y": 332
+    }
+  },
+  {
+    "step": 99,
+    "mode": "running",
+    "score": 2728,
+    "clustersClearedCount": 4,
+    "boostMeter": 98.9,
+    "pulseActive": true,
+    "pointer": {
+      "x": 500,
+      "y": 384
+    }
+  },
+  {
+    "step": 100,
+    "mode": "running",
+    "score": 2728,
+    "clustersClearedCount": 4,
+    "boostMeter": 98.9,
+    "pulseActive": true,
+    "pointer": {
+      "x": 500,
+      "y": 384
+    }
+  },
+  {
+    "step": 101,
+    "mode": "running",
+    "score": 2728,
+    "clustersClearedCount": 4,
+    "boostMeter": 94.4,
+    "pulseActive": false,
+    "pointer": {
+      "x": 500,
+      "y": 384
+    }
+  },
+  {
+    "step": 102,
+    "mode": "running",
+    "score": 2728,
+    "clustersClearedCount": 4,
+    "boostMeter": 94.4,
+    "pulseActive": false,
+    "pointer": {
+      "x": 500,
+      "y": 384
+    }
+  },
+  {
+    "step": 103,
+    "mode": "running",
+    "score": 2728,
+    "clustersClearedCount": 4,
+    "boostMeter": 94.4,
+    "pulseActive": false,
+    "pointer": {
+      "x": 500,
+      "y": 384
+    }
+  },
+  {
+    "step": 104,
+    "mode": "running",
+    "score": 2728,
+    "clustersClearedCount": 4,
+    "boostMeter": 94.4,
+    "pulseActive": false,
+    "pointer": {
+      "x": 500,
+      "y": 384
+    }
+  },
+  {
+    "step": 105,
+    "mode": "running",
+    "score": 2728,
+    "clustersClearedCount": 4,
+    "boostMeter": 94.4,
+    "pulseActive": false,
+    "pointer": {
+      "x": 500,
+      "y": 384
+    }
+  },
+  {
+    "step": 106,
+    "mode": "running",
+    "score": 2728,
+    "clustersClearedCount": 4,
+    "boostMeter": 94.4,
+    "pulseActive": false,
+    "pointer": {
+      "x": 500,
+      "y": 384
+    }
+  },
+  {
+    "step": 107,
+    "mode": "running",
+    "score": 2728,
+    "clustersClearedCount": 4,
+    "boostMeter": 94.4,
+    "pulseActive": false,
+    "pointer": {
+      "x": 500,
+      "y": 384
+    }
+  },
+  {
+    "step": 108,
+    "mode": "running",
+    "score": 2728,
+    "clustersClearedCount": 4,
+    "boostMeter": 94.4,
+    "pulseActive": false,
+    "pointer": {
+      "x": 500,
+      "y": 384
+    }
+  },
+  {
+    "step": 109,
+    "mode": "running",
+    "score": 2728,
+    "clustersClearedCount": 4,
+    "boostMeter": 94.4,
+    "pulseActive": false,
+    "pointer": {
+      "x": 500,
+      "y": 384
+    }
+  },
+  {
+    "step": 110,
+    "mode": "running",
+    "score": 2728,
+    "clustersClearedCount": 4,
+    "boostMeter": 94.4,
+    "pulseActive": false,
+    "pointer": {
+      "x": 500,
+      "y": 384
+    }
+  },
+  {
+    "step": 111,
+    "mode": "running",
+    "score": 2728,
+    "clustersClearedCount": 4,
+    "boostMeter": 94.4,
+    "pulseActive": false,
+    "pointer": {
+      "x": 500,
+      "y": 384
+    }
+  },
+  {
+    "step": 112,
+    "mode": "running",
+    "score": 2728,
+    "clustersClearedCount": 4,
+    "boostMeter": 94.4,
+    "pulseActive": false,
+    "pointer": {
+      "x": 500,
+      "y": 384
+    }
+  },
+  {
+    "step": 113,
+    "mode": "running",
+    "score": 2728,
+    "clustersClearedCount": 4,
+    "boostMeter": 94.4,
+    "pulseActive": false,
+    "pointer": {
+      "x": 500,
+      "y": 384
+    }
+  },
+  {
+    "step": 114,
+    "mode": "running",
+    "score": 2728,
+    "clustersClearedCount": 4,
+    "boostMeter": 94.4,
+    "pulseActive": false,
+    "pointer": {
+      "x": 500,
+      "y": 384
+    }
+  },
+  {
+    "step": 115,
+    "mode": "running",
+    "score": 2728,
+    "clustersClearedCount": 4,
+    "boostMeter": 94.4,
+    "pulseActive": false,
+    "pointer": {
+      "x": 500,
+      "y": 384
+    }
+  },
+  {
+    "step": 116,
+    "mode": "running",
+    "score": 2728,
+    "clustersClearedCount": 4,
+    "boostMeter": 94.4,
+    "pulseActive": false,
+    "pointer": {
+      "x": 500,
+      "y": 384
+    }
+  },
+  {
+    "step": 117,
+    "mode": "running",
+    "score": 2728,
+    "clustersClearedCount": 4,
+    "boostMeter": 94.4,
+    "pulseActive": false,
+    "pointer": {
+      "x": 500,
+      "y": 384
+    }
+  },
+  {
+    "step": 118,
+    "mode": "running",
+    "score": 2728,
+    "clustersClearedCount": 4,
+    "boostMeter": 94.4,
+    "pulseActive": false,
+    "pointer": {
+      "x": 500,
+      "y": 384
+    }
+  },
+  {
+    "step": 119,
+    "mode": "running",
+    "score": 2728,
+    "clustersClearedCount": 4,
+    "boostMeter": 94.4,
+    "pulseActive": false,
+    "pointer": {
+      "x": 500,
+      "y": 384
+    }
+  },
+  {
+    "step": 120,
+    "mode": "running",
+    "score": 2728,
+    "clustersClearedCount": 4,
+    "boostMeter": 94.4,
+    "pulseActive": false,
+    "pointer": {
+      "x": 500,
+      "y": 384
+    }
+  },
+  {
+    "step": 121,
+    "mode": "running",
+    "score": 2728,
+    "clustersClearedCount": 4,
+    "boostMeter": 94.4,
+    "pulseActive": false,
+    "pointer": {
+      "x": 500,
+      "y": 384
+    }
+  },
+  {
+    "step": 122,
+    "mode": "running",
+    "score": 2728,
+    "clustersClearedCount": 4,
+    "boostMeter": 94.4,
+    "pulseActive": false,
+    "pointer": {
+      "x": 500,
+      "y": 384
+    }
+  },
+  {
+    "step": 123,
+    "mode": "running",
+    "score": 2728,
+    "clustersClearedCount": 4,
+    "boostMeter": 94.4,
+    "pulseActive": false,
+    "pointer": {
+      "x": 520,
+      "y": 410
+    }
+  },
+  {
+    "step": 124,
+    "mode": "running",
+    "score": 2860,
+    "clustersClearedCount": 4,
+    "boostMeter": 94.4,
+    "pulseActive": false,
+    "pointer": {
+      "x": 488,
+      "y": 388
+    }
+  },
+  {
+    "step": 125,
+    "mode": "running",
+    "score": 2860,
+    "clustersClearedCount": 4,
+    "boostMeter": 94.4,
+    "pulseActive": false,
+    "pointer": {
+      "x": 520,
+      "y": 410
+    }
+  },
+  {
+    "step": 126,
+    "mode": "running",
+    "score": 2860,
+    "clustersClearedCount": 4,
+    "boostMeter": 94.4,
+    "pulseActive": false,
+    "pointer": {
+      "x": 520,
+      "y": 410
+    }
+  },
+  {
+    "step": 127,
+    "mode": "running",
+    "score": 2992,
+    "clustersClearedCount": 4,
+    "boostMeter": 94.4,
+    "pulseActive": false,
+    "pointer": {
+      "x": 488,
+      "y": 432
+    }
+  },
+  {
+    "step": 128,
+    "mode": "running",
+    "score": 2992,
+    "clustersClearedCount": 4,
+    "boostMeter": 94.4,
+    "pulseActive": false,
+    "pointer": {
+      "x": 520,
+      "y": 410
+    }
+  },
+  {
+    "step": 129,
+    "mode": "running",
+    "score": 2992,
+    "clustersClearedCount": 4,
+    "boostMeter": 94.4,
+    "pulseActive": false,
+    "pointer": {
+      "x": 520,
+      "y": 410
+    }
+  },
+  {
+    "step": 130,
+    "mode": "running",
+    "score": 2992,
+    "clustersClearedCount": 4,
+    "boostMeter": 98.9,
+    "pulseActive": true,
+    "pointer": {
+      "x": 520,
+      "y": 410
+    }
+  },
+  {
+    "step": 131,
+    "mode": "running",
+    "score": 2992,
+    "clustersClearedCount": 4,
+    "boostMeter": 100,
+    "pulseActive": true,
+    "pointer": {
+      "x": 520,
+      "y": 410
+    }
+  },
+  {
+    "step": 132,
+    "mode": "running",
+    "score": 2992,
+    "clustersClearedCount": 4,
+    "boostMeter": 100,
+    "pulseActive": true,
+    "pointer": {
+      "x": 520,
+      "y": 410
+    }
+  },
+  {
+    "step": 133,
+    "mode": "running",
+    "score": 3124,
+    "clustersClearedCount": 4,
+    "boostMeter": 100,
+    "pulseActive": true,
+    "pointer": {
+      "x": 520,
+      "y": 410
+    }
+  },
+  {
+    "step": 134,
+    "mode": "running",
+    "score": 3124,
+    "clustersClearedCount": 4,
+    "boostMeter": 100,
+    "pulseActive": true,
+    "pointer": {
+      "x": 456,
+      "y": 410
+    }
+  },
+  {
+    "step": 135,
+    "mode": "running",
+    "score": 3124,
+    "clustersClearedCount": 4,
+    "boostMeter": 100,
+    "pulseActive": true,
+    "pointer": {
+      "x": 456,
+      "y": 410
+    }
+  },
+  {
+    "step": 136,
+    "mode": "running",
+    "score": 3124,
+    "clustersClearedCount": 4,
+    "boostMeter": 100,
+    "pulseActive": true,
+    "pointer": {
+      "x": 456,
+      "y": 410
+    }
+  },
+  {
+    "step": 137,
+    "mode": "running",
+    "score": 3124,
+    "clustersClearedCount": 4,
+    "boostMeter": 100,
+    "pulseActive": true,
+    "pointer": {
+      "x": 456,
+      "y": 410
+    }
+  },
+  {
+    "step": 138,
+    "mode": "running",
+    "score": 3124,
+    "clustersClearedCount": 4,
+    "boostMeter": 100,
+    "pulseActive": true,
+    "pointer": {
+      "x": 456,
+      "y": 410
+    }
+  },
+  {
+    "step": 139,
+    "mode": "running",
+    "score": 3124,
+    "clustersClearedCount": 4,
+    "boostMeter": 100,
+    "pulseActive": true,
+    "pointer": {
+      "x": 456,
+      "y": 410
+    }
+  },
+  {
+    "step": 140,
+    "mode": "running",
+    "score": 3536,
+    "clustersClearedCount": 5,
+    "boostMeter": 100,
+    "pulseActive": true,
+    "pointer": {
+      "x": 456,
+      "y": 410
+    }
+  },
+  {
+    "step": 141,
+    "mode": "running",
+    "score": 3536,
+    "clustersClearedCount": 5,
+    "boostMeter": 98.9,
+    "pulseActive": true,
+    "pointer": {
+      "x": 248,
+      "y": 336
+    }
+  },
+  {
+    "step": 142,
+    "mode": "running",
+    "score": 3536,
+    "clustersClearedCount": 5,
+    "boostMeter": 98.9,
+    "pulseActive": true,
+    "pointer": {
+      "x": 248,
+      "y": 336
+    }
+  },
+  {
+    "step": 143,
+    "mode": "running",
+    "score": 3536,
+    "clustersClearedCount": 5,
+    "boostMeter": 98.9,
+    "pulseActive": true,
+    "pointer": {
+      "x": 248,
+      "y": 336
+    }
+  },
+  {
+    "step": 144,
+    "mode": "running",
+    "score": 3536,
+    "clustersClearedCount": 5,
+    "boostMeter": 96.6,
+    "pulseActive": false,
+    "pointer": {
+      "x": 248,
+      "y": 336
+    }
+  },
+  {
+    "step": 145,
+    "mode": "running",
+    "score": 3536,
+    "clustersClearedCount": 5,
+    "boostMeter": 96.6,
+    "pulseActive": false,
+    "pointer": {
+      "x": 248,
+      "y": 336
+    }
+  },
+  {
+    "step": 146,
+    "mode": "running",
+    "score": 3536,
+    "clustersClearedCount": 5,
+    "boostMeter": 96.6,
+    "pulseActive": false,
+    "pointer": {
+      "x": 248,
+      "y": 336
+    }
+  },
+  {
+    "step": 147,
+    "mode": "running",
+    "score": 3536,
+    "clustersClearedCount": 5,
+    "boostMeter": 96.6,
+    "pulseActive": false,
+    "pointer": {
+      "x": 248,
+      "y": 336
+    }
+  },
+  {
+    "step": 148,
+    "mode": "running",
+    "score": 3536,
+    "clustersClearedCount": 5,
+    "boostMeter": 96.6,
+    "pulseActive": false,
+    "pointer": {
+      "x": 248,
+      "y": 336
+    }
+  },
+  {
+    "step": 149,
+    "mode": "running",
+    "score": 3536,
+    "clustersClearedCount": 5,
+    "boostMeter": 96.6,
+    "pulseActive": false,
+    "pointer": {
+      "x": 248,
+      "y": 336
+    }
+  },
+  {
+    "step": 150,
+    "mode": "running",
+    "score": 3536,
+    "clustersClearedCount": 5,
+    "boostMeter": 96.6,
+    "pulseActive": false,
+    "pointer": {
+      "x": 248,
+      "y": 336
+    }
+  },
+  {
+    "step": 151,
+    "mode": "running",
+    "score": 3536,
+    "clustersClearedCount": 5,
+    "boostMeter": 96.6,
+    "pulseActive": false,
+    "pointer": {
+      "x": 248,
+      "y": 336
+    }
+  },
+  {
+    "step": 152,
+    "mode": "running",
+    "score": 3536,
+    "clustersClearedCount": 5,
+    "boostMeter": 96.6,
+    "pulseActive": false,
+    "pointer": {
+      "x": 248,
+      "y": 336
+    }
+  },
+  {
+    "step": 153,
+    "mode": "running",
+    "score": 3536,
+    "clustersClearedCount": 5,
+    "boostMeter": 96.6,
+    "pulseActive": false,
+    "pointer": {
+      "x": 248,
+      "y": 336
+    }
+  },
+  {
+    "step": 154,
+    "mode": "running",
+    "score": 3536,
+    "clustersClearedCount": 5,
+    "boostMeter": 96.6,
+    "pulseActive": false,
+    "pointer": {
+      "x": 248,
+      "y": 336
+    }
+  },
+  {
+    "step": 155,
+    "mode": "running",
+    "score": 3536,
+    "clustersClearedCount": 5,
+    "boostMeter": 96.6,
+    "pulseActive": false,
+    "pointer": {
+      "x": 248,
+      "y": 336
+    }
+  },
+  {
+    "step": 156,
+    "mode": "running",
+    "score": 3536,
+    "clustersClearedCount": 5,
+    "boostMeter": 96.6,
+    "pulseActive": false,
+    "pointer": {
+      "x": 248,
+      "y": 336
+    }
+  },
+  {
+    "step": 157,
+    "mode": "running",
+    "score": 3668,
+    "clustersClearedCount": 5,
+    "boostMeter": 96.6,
+    "pulseActive": false,
+    "pointer": {
+      "x": 240,
+      "y": 346
+    }
+  },
+  {
+    "step": 158,
+    "mode": "running",
+    "score": 3668,
+    "clustersClearedCount": 5,
+    "boostMeter": 96.6,
+    "pulseActive": false,
+    "pointer": {
+      "x": 238,
+      "y": 378
+    }
+  },
+  {
+    "step": 159,
+    "mode": "running",
+    "score": 3800,
+    "clustersClearedCount": 5,
+    "boostMeter": 96.6,
+    "pulseActive": false,
+    "pointer": {
+      "x": 238,
+      "y": 378
+    }
+  },
+  {
+    "step": 160,
+    "mode": "running",
+    "score": 3800,
+    "clustersClearedCount": 5,
+    "boostMeter": 96.6,
+    "pulseActive": false,
+    "pointer": {
+      "x": 194,
+      "y": 374
+    }
+  },
+  {
+    "step": 161,
+    "mode": "running",
+    "score": 3800,
+    "clustersClearedCount": 5,
+    "boostMeter": 96.6,
+    "pulseActive": false,
+    "pointer": {
+      "x": 194,
+      "y": 374
+    }
+  },
+  {
+    "step": 162,
+    "mode": "running",
+    "score": 3932,
+    "clustersClearedCount": 5,
+    "boostMeter": 96.6,
+    "pulseActive": false,
+    "pointer": {
+      "x": 194,
+      "y": 374
+    }
+  },
+  {
+    "step": 163,
+    "mode": "running",
+    "score": 3932,
+    "clustersClearedCount": 5,
+    "boostMeter": 96.6,
+    "pulseActive": false,
+    "pointer": {
+      "x": 196,
+      "y": 336
+    }
+  },
+  {
+    "step": 164,
+    "mode": "running",
+    "score": 3932,
+    "clustersClearedCount": 5,
+    "boostMeter": 96.6,
+    "pulseActive": false,
+    "pointer": {
+      "x": 196,
+      "y": 336
+    }
+  },
+  {
+    "step": 165,
+    "mode": "finished",
+    "score": 4947,
+    "clustersClearedCount": 6,
+    "boostMeter": 96.6,
+    "pulseActive": false,
+    "pointer": {
+      "x": 196,
+      "y": 336
+    }
+  }
+]

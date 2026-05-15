@@ -26,16 +26,18 @@ pnpm dev
 
 ## Rules
 
-- Grow by collecting energy orbs before rival snakes sweep them away.
+- Clear all six orb clusters around the arena to finish the run.
 - Rival snakes follow deterministic patrol loops and cause an instant wipe if you hit a rival body or the arena wall.
-- Boosting increases speed but drains the shared boost meter.
-- The run ends in victory after the target length and score thresholds are both met.
+- Boosting increases speed but drains the shared meter; the meter only refills during visible pulse windows.
+- Cluster clears completed while a pulse window is live award an extra pulse bonus.
+- The route is deterministic, so the challenge is line quality and boost timing rather than random spawn variance.
 
 ## Scoring
 
-- Each orb grants base score plus a small chain bonus.
-- Boost pickups and efficient route clears add timed bonuses.
-- Finishing with unused boost charge grants a closing efficiency bonus.
+- Each orb grants `84` plus a combo-scaled bonus capped at `+48`.
+- Each cleared cluster grants `+160`.
+- Clearing a cluster during an active pulse window grants an extra `+120`.
+- The finish bonus starts at `320`, adds the remaining boost meter value times `2`, and adds `+70` per captured pulse bonus.
 
 ## Twist
 
@@ -51,9 +53,23 @@ Boost charge refills in visible pulses. Strong runs depend on spending speed bur
 - Browser hooks:
   `window.advanceTime(ms)` advances the deterministic simulation.
   `window.render_game_to_text()` returns the current arena state as JSON text.
-- Capture artifacts and proof numbers are generated after verification finishes.
+- Node self-check proof:
+  finish `13.07s`, score `4954`, length `34`, `6/6` clusters, `24/24` orbs, `3` pulse bonuses.
+- Browser capture proof:
+  finish `13.71s`, score `4947`, finish bonus `723`, length `34`, `6/6` clusters, `24/24` orbs, `3` pulse bonuses.
+- Pause proof:
+  `artifacts/playwright/state-3-paused.json` shows elapsed time and head position frozen across the pause window.
+- Action payload:
+  `artifacts/playwright/action_payload.json` uses the required `buttons`, `mouse_x`, `mouse_y`, and `frames` schema.
+- Screenshots:
+  `artifacts/playwright/shot-0-title-start.png`
+  `artifacts/playwright/shot-1-arena-opening.png`
+  `artifacts/playwright/shot-2-boost-corridor.png`
+  `artifacts/playwright/shot-3-paused.png`
+  `artifacts/playwright/shot-4-finish-banner.png`
+  `artifacts/playwright/shot-5-reset-title.png`
 
-## GIF Captures
+### GIF Captures
 
 - `Arena opening`: `assets/gifs/clip-01-arena-opening.gif`
 - `Boost corridor`: `assets/gifs/clip-02-boost-corridor.gif`
