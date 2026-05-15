@@ -1,8 +1,8 @@
-artifacts
-assets/gifs
-docs
-scripts
-tests
-README.md
-design.md
-progress.md
+*
+!.vercelignore
+!index.html
+!package.json
+!pnpm-lock.yaml
+!src
+!src/**
+!vercel.json
