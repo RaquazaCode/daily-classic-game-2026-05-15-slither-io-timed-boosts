@@ -3,125 +3,268 @@ export const FIXED_STEP_MS = 1000 / 60;
 export const WORLD = {
   width: 960,
   height: 540,
-  groundY: 444,
-  playerX: 188,
-  playerWidth: 56,
-  playerHeight: 60,
-  finishDistance: 4320,
+  arena: {
+    left: 88,
+    top: 60,
+    right: 872,
+    bottom: 480,
+  },
+  start: {
+    x: 158,
+    y: 272,
+  },
 };
 
-const BASE_SPEED = 294;
-const GRAVITY = 1620;
-const JUMP_VELOCITY = -790;
-const COYOTE_MS = 110;
-const JUMP_BUFFER_MS = 140;
+const PLAYER_RADIUS = 12;
+const PLAYER_BASE_SPEED = 126;
+const PLAYER_BOOST_SPEED = 198;
+const PLAYER_TURN_RATE = Math.PI * 1.95;
+const RIVAL_TURN_RATE = Math.PI * 1.5;
+const MAX_BOOST = 100;
+const BOOST_PERIOD_MS = 3600;
+const BOOST_ACTIVE_MS = 1180;
+const BOOST_RECHARGE_PER_SECOND = 92;
+const BOOST_DRAIN_PER_SECOND = 68;
+const ORB_RADIUS = 9;
+const ORB_SCORE = 84;
+const CLUSTER_CLEAR_BONUS = 160;
+const ACTIVE_WINDOW_CLEAR_BONUS = 120;
+const FINISH_BONUS_BASE = 320;
+const PLAYER_SEGMENT_SPACING = 10;
+const RIVAL_SEGMENT_SPACING = 11;
+const EPSILON = 0.0001;
 
-const OBSTACLE_DEFS = [
+const CLUSTERS = [
   {
-    id: 'pulse-01',
-    label: 'Warm-Up Step',
-    x: 640,
-    jumpCue: 244,
-    ring: { x: 688, y: 288, radius: 15 },
-    segments: [{ offsetX: 0, width: 82, minHeight: 44, maxHeight: 126, cycleMs: 1120, phaseMs: 110 }],
-  },
-  {
-    id: 'pulse-02',
-    label: 'Split Lift',
-    x: 1060,
-    jumpCue: 252,
-    ring: { x: 1138, y: 258, radius: 15 },
-    segments: [
-      { offsetX: 0, width: 34, minHeight: 16, maxHeight: 48, cycleMs: 960, phaseMs: 80 },
-      { offsetX: 58, width: 28, minHeight: 28, maxHeight: 68, cycleMs: 1340, phaseMs: 420 },
+    id: 'north-west',
+    label: 'Northwest Bloom',
+    x: 228,
+    y: 158,
+    orbs: [
+      { x: -24, y: 0 },
+      { x: 0, y: -22 },
+      { x: 24, y: 0 },
+      { x: 0, y: 22 },
     ],
   },
   {
-    id: 'pulse-03',
-    label: 'Skyline Gate',
-    x: 1500,
-    jumpCue: 264,
-    ring: { x: 1542, y: 238, radius: 16 },
-    segments: [{ offsetX: 0, width: 92, minHeight: 54, maxHeight: 140, cycleMs: 1240, phaseMs: 280 }],
-  },
-  {
-    id: 'pulse-04',
-    label: 'Zipper Pair',
-    x: 1940,
-    jumpCue: 258,
-    ring: { x: 2010, y: 272, radius: 15 },
-    segments: [
-      { offsetX: 0, width: 44, minHeight: 42, maxHeight: 118, cycleMs: 820, phaseMs: 180 },
-      { offsetX: 70, width: 44, minHeight: 36, maxHeight: 112, cycleMs: 820, phaseMs: 560 },
+    id: 'north-spine',
+    label: 'North Spine',
+    x: 470,
+    y: 118,
+    orbs: [
+      { x: -30, y: 2 },
+      { x: 0, y: -24 },
+      { x: 0, y: 24 },
+      { x: 30, y: 2 },
     ],
   },
   {
-    id: 'pulse-05',
-    label: 'Metro Ladder',
-    x: 2350,
-    jumpCue: 272,
-    ring: { x: 2450, y: 228, radius: 16 },
-    segments: [
-      { offsetX: 0, width: 28, minHeight: 34, maxHeight: 88, cycleMs: 980, phaseMs: 220 },
-      { offsetX: 42, width: 28, minHeight: 22, maxHeight: 60, cycleMs: 980, phaseMs: 500 },
-      { offsetX: 84, width: 28, minHeight: 42, maxHeight: 104, cycleMs: 980, phaseMs: 820 },
+    id: 'north-east',
+    label: 'Northeast Arc',
+    x: 706,
+    y: 164,
+    orbs: [
+      { x: -24, y: -6 },
+      { x: 0, y: -28 },
+      { x: 24, y: -6 },
+      { x: 0, y: 22 },
     ],
   },
   {
-    id: 'pulse-06',
-    label: 'Breaker Wall',
-    x: 2805,
-    jumpCue: 282,
-    ring: { x: 2858, y: 216, radius: 16 },
-    segments: [{ offsetX: 0, width: 72, minHeight: 40, maxHeight: 118, cycleMs: 930, phaseMs: 360 }],
-  },
-  {
-    id: 'pulse-07',
-    label: 'Twin Surge',
-    x: 3260,
-    jumpCue: 286,
-    ring: { x: 3330, y: 260, radius: 15 },
-    segments: [
-      { offsetX: 0, width: 42, minHeight: 40, maxHeight: 104, cycleMs: 880, phaseMs: 140 },
-      { offsetX: 68, width: 34, minHeight: 14, maxHeight: 72, cycleMs: 1180, phaseMs: 560 },
+    id: 'east-drift',
+    label: 'East Drift',
+    x: 738,
+    y: 340,
+    orbs: [
+      { x: -18, y: -24 },
+      { x: 20, y: -8 },
+      { x: 16, y: 24 },
+      { x: -20, y: 12 },
     ],
   },
   {
-    id: 'pulse-08',
-    label: 'Final Cascade',
-    x: 3690,
-    jumpCue: 292,
-    ring: { x: 3792, y: 236, radius: 16 },
-    segments: [
-      { offsetX: 0, width: 34, minHeight: 32, maxHeight: 84, cycleMs: 860, phaseMs: 90 },
-      { offsetX: 46, width: 34, minHeight: 46, maxHeight: 110, cycleMs: 1180, phaseMs: 420 },
-      { offsetX: 92, width: 34, minHeight: 20, maxHeight: 76, cycleMs: 860, phaseMs: 710 },
+    id: 'south-spine',
+    label: 'South Spine',
+    x: 488,
+    y: 410,
+    orbs: [
+      { x: -32, y: 0 },
+      { x: 0, y: -22 },
+      { x: 0, y: 22 },
+      { x: 32, y: 0 },
+    ],
+  },
+  {
+    id: 'south-west',
+    label: 'Southwest Coil',
+    x: 216,
+    y: 354,
+    orbs: [
+      { x: -20, y: -18 },
+      { x: 24, y: -8 },
+      { x: 22, y: 24 },
+      { x: -22, y: 20 },
     ],
   },
 ];
 
-function clamp(value, min, max) {
-  return Math.min(max, Math.max(min, value));
-}
+const RIVAL_DEFS = [
+  {
+    id: 'coral-circuit',
+    label: 'Coral Circuit',
+    color: '#f5675d',
+    headColor: '#ffd9bf',
+    speed: 112,
+    segmentCount: 18,
+    waypoints: [
+      { x: 326, y: 170 },
+      { x: 610, y: 154 },
+      { x: 668, y: 262 },
+      { x: 596, y: 388 },
+      { x: 338, y: 400 },
+      { x: 284, y: 264 },
+    ],
+  },
+  {
+    id: 'jade-switchback',
+    label: 'Jade Switchback',
+    color: '#4dd4b2',
+    headColor: '#e8fff7',
+    speed: 104,
+    segmentCount: 16,
+    waypoints: [
+      { x: 640, y: 202 },
+      { x: 694, y: 254 },
+      { x: 626, y: 314 },
+      { x: 516, y: 304 },
+      { x: 462, y: 242 },
+      { x: 546, y: 178 },
+    ],
+  },
+  {
+    id: 'gold-arc',
+    label: 'Gold Arc',
+    color: '#ffb45f',
+    headColor: '#fff2cf',
+    speed: 108,
+    segmentCount: 17,
+    waypoints: [
+      { x: 262, y: 270 },
+      { x: 340, y: 210 },
+      { x: 468, y: 198 },
+      { x: 534, y: 268 },
+      { x: 466, y: 334 },
+      { x: 320, y: 324 },
+    ],
+  },
+];
 
 function round(value, digits = 2) {
   return Number(value.toFixed(digits));
 }
 
-function triangleWave(elapsedMs, cycleMs, phaseMs = 0) {
-  const normalized = ((elapsedMs + phaseMs) % cycleMs + cycleMs) % cycleMs;
-  const progress = normalized / cycleMs;
-  return progress < 0.5 ? progress * 2 : 2 - progress * 2;
+function clamp(value, min, max) {
+  return Math.min(max, Math.max(min, value));
 }
 
-function resolveSegmentHeight(segment, elapsedMs, obstacleScreenX) {
-  const rawPulse = triangleWave(elapsedMs, segment.cycleMs, segment.phaseMs);
-  const safePulse =
-    obstacleScreenX <= 220 ? Math.min(rawPulse, 0.25) : obstacleScreenX <= 300 ? Math.min(rawPulse, 0.38) : rawPulse;
-  const height = segment.minHeight + (segment.maxHeight - segment.minHeight) * safePulse;
+function distance(a, b) {
+  return Math.hypot(a.x - b.x, a.y - b.y);
+}
+
+function normalizeAngle(angle) {
+  let current = angle;
+  while (current <= -Math.PI) {
+    current += Math.PI * 2;
+  }
+  while (current > Math.PI) {
+    current -= Math.PI * 2;
+  }
+  return current;
+}
+
+function rotateToward(current, target, maxStep) {
+  const delta = normalizeAngle(target - current);
+  if (Math.abs(delta) <= maxStep) {
+    return target;
+  }
+  return current + Math.sign(delta) * maxStep;
+}
+
+function createSnake({ id, label, color, headColor, x, y, angle, speed, segmentCount, segmentSpacing, turnRate, waypoints }) {
+  const segments = Array.from({ length: segmentCount }, (_, index) => ({
+    x: x - Math.cos(angle) * index * segmentSpacing,
+    y: y - Math.sin(angle) * index * segmentSpacing,
+  }));
+
   return {
-    pulse: safePulse,
-    height,
+    id,
+    label,
+    color,
+    headColor,
+    speed,
+    angle,
+    segmentSpacing,
+    turnRate,
+    waypoints: waypoints ? waypoints.map((point) => ({ ...point })) : null,
+    waypointIndex: 1,
+    segments,
+  };
+}
+
+function createPlayer() {
+  return createSnake({
+    id: 'player',
+    label: 'Player',
+    color: '#1ac3b3',
+    headColor: '#f6fff6',
+    x: WORLD.start.x,
+    y: WORLD.start.y,
+    angle: 0,
+    speed: PLAYER_BASE_SPEED,
+    segmentCount: 10,
+    segmentSpacing: PLAYER_SEGMENT_SPACING,
+    turnRate: PLAYER_TURN_RATE,
+  });
+}
+
+function createRival(def) {
+  const start = def.waypoints[0];
+  const next = def.waypoints[1];
+  const angle = Math.atan2(next.y - start.y, next.x - start.x);
+  return createSnake({
+    ...def,
+    x: start.x,
+    y: start.y,
+    angle,
+    segmentSpacing: RIVAL_SEGMENT_SPACING,
+    turnRate: RIVAL_TURN_RATE,
+  });
+}
+
+function createOrbs() {
+  return CLUSTERS.flatMap((cluster) =>
+    cluster.orbs.map((offset, index) => ({
+      id: `${cluster.id}-orb-${index + 1}`,
+      clusterId: cluster.id,
+      x: cluster.x + offset.x,
+      y: cluster.y + offset.y,
+      collected: false,
+    }))
+  );
+}
+
+function getBoostPhase(elapsedMs) {
+  const cycleElapsed = ((elapsedMs % BOOST_PERIOD_MS) + BOOST_PERIOD_MS) % BOOST_PERIOD_MS;
+  const active = cycleElapsed < BOOST_ACTIVE_MS;
+  return {
+    active,
+    cycleElapsed,
+    pulseIndex: Math.floor(elapsedMs / BOOST_PERIOD_MS),
+    progress: active
+      ? clamp(cycleElapsed / BOOST_ACTIVE_MS, 0, 1)
+      : clamp((cycleElapsed - BOOST_ACTIVE_MS) / (BOOST_PERIOD_MS - BOOST_ACTIVE_MS), 0, 1),
+    msUntilPhaseChange: active ? BOOST_ACTIVE_MS - cycleElapsed : BOOST_PERIOD_MS - cycleElapsed,
   };
 }
 
@@ -130,401 +273,443 @@ function createInitialState(seed) {
     seed,
     mode: 'title',
     elapsedMs: 0,
-    distance: 0,
     score: 0,
     finishBonus: 0,
-    clearedCount: 0,
-    totalObstacles: OBSTACLE_DEFS.length,
-    ringsCollectedCount: 0,
-    totalRings: OBSTACLE_DEFS.length,
     combo: 0,
     peakCombo: 0,
+    orbsCollectedCount: 0,
+    totalOrbs: CLUSTERS.length * 4,
+    clustersClearedCount: 0,
+    totalClusters: CLUSTERS.length,
+    boostMeter: 36,
+    boostWindowsCaptured: 0,
+    boostUseMs: 0,
     lastCrashReason: null,
-    message: 'Pulse lanes reset every cycle. Time jumps to each opening.',
-    player: {
-      x: WORLD.playerX,
-      y: WORLD.groundY - WORLD.playerHeight,
-      width: WORLD.playerWidth,
-      height: WORLD.playerHeight,
-      vy: 0,
-      grounded: true,
-      coyoteMs: COYOTE_MS,
-      jumpBufferMs: 0,
-      jumps: 0,
+    message: 'Boost charge refills only during pulse windows. Cut the corner when the ring glows.',
+    pointerTarget: {
+      x: CLUSTERS[0].x,
+      y: CLUSTERS[0].y,
     },
-    clearedObstacleIds: [],
-    collectedRingIds: [],
-    flashMs: 0,
+    lastPulseCueIndex: -1,
+    player: createPlayer(),
+    rivals: RIVAL_DEFS.map(createRival),
+    orbs: createOrbs(),
+    input: {
+      boostPressed: false,
+    },
   };
 }
 
-function stateGroundTop() {
-  return WORLD.groundY - WORLD.playerHeight;
+function clonePoint(point) {
+  return {
+    x: point.x,
+    y: point.y,
+  };
+}
+
+function followSegments(snake) {
+  for (let index = 1; index < snake.segments.length; index += 1) {
+    const leader = snake.segments[index - 1];
+    const current = snake.segments[index];
+    const dx = leader.x - current.x;
+    const dy = leader.y - current.y;
+    const separation = Math.hypot(dx, dy);
+    if (separation <= EPSILON) {
+      continue;
+    }
+    const targetDistance = snake.segmentSpacing;
+    const adjustment = (separation - targetDistance) / separation;
+    current.x += dx * adjustment;
+    current.y += dy * adjustment;
+  }
+}
+
+function growSnake(snake, segmentsToAdd = 1) {
+  for (let count = 0; count < segmentsToAdd; count += 1) {
+    const tail = snake.segments[snake.segments.length - 1];
+    snake.segments.push(clonePoint(tail));
+  }
+}
+
+function moveRival(rival, dt) {
+  const head = rival.segments[0];
+  const target = rival.waypoints[rival.waypointIndex];
+  const desiredAngle = Math.atan2(target.y - head.y, target.x - head.x);
+  rival.angle = rotateToward(rival.angle, desiredAngle, rival.turnRate * dt);
+  head.x += Math.cos(rival.angle) * rival.speed * dt;
+  head.y += Math.sin(rival.angle) * rival.speed * dt;
+
+  if (distance(head, target) <= 20) {
+    rival.waypointIndex = (rival.waypointIndex + 1) % rival.waypoints.length;
+  }
+
+  followSegments(rival);
+}
+
+function awardOrb(state, orb) {
+  orb.collected = true;
+  state.combo += 1;
+  state.peakCombo = Math.max(state.peakCombo, state.combo);
+  state.orbsCollectedCount += 1;
+  state.score += ORB_SCORE + Math.min(48, state.combo * 4);
+  growSnake(state.player, 1);
+}
+
+function maybeClearCluster(state, clusterId, boostPhase) {
+  const cluster = CLUSTERS.find((item) => item.id === clusterId);
+  const remaining = state.orbs.filter((orb) => orb.clusterId === clusterId && !orb.collected);
+  if (remaining.length > 0) {
+    return;
+  }
+
+  const wasAlreadyCleared = state.clustersClearedCount > 0 && state.message.includes(cluster.label);
+  const clusterWasCounted = state.score < 0;
+  void clusterWasCounted;
+
+  const currentCount = state.orbs.filter((orb) => orb.clusterId === clusterId && orb.collected).length;
+  if (currentCount !== 4) {
+    return;
+  }
+
+  const previouslyCleared = state.completedClusters.has(clusterId);
+  if (previouslyCleared) {
+    return;
+  }
+
+  state.completedClusters.add(clusterId);
+  state.clustersClearedCount += 1;
+  state.score += CLUSTER_CLEAR_BONUS;
+
+  let bonusText = '';
+  if (boostPhase.active) {
+    state.score += ACTIVE_WINDOW_CLEAR_BONUS;
+    state.boostWindowsCaptured += 1;
+    bonusText = ' Pulse bonus locked.';
+  }
+
+  state.message = `${cluster.label} cleared.${bonusText}`;
+
+  if (wasAlreadyCleared) {
+    state.message = `${cluster.label} cleared.${bonusText}`;
+  }
+}
+
+function currentPlayerSpeed(state) {
+  if (state.input.boostPressed && state.boostMeter > 0) {
+    return PLAYER_BOOST_SPEED;
+  }
+  const growthBonus = Math.min(18, Math.max(0, state.player.segments.length - 10) * 1.2);
+  return PLAYER_BASE_SPEED + growthBonus;
+}
+
+function crash(state, reason) {
+  state.mode = 'crashed';
+  state.lastCrashReason = reason;
+  state.message = `${reason} Press Enter or Start to rerun the route.`;
+  state.input.boostPressed = false;
+}
+
+function maybeCollectOrbs(state, boostPhase) {
+  const head = state.player.segments[0];
+  for (const orb of state.orbs) {
+    if (orb.collected) {
+      continue;
+    }
+    if (distance(head, orb) <= PLAYER_RADIUS + ORB_RADIUS + 2) {
+      awardOrb(state, orb);
+      maybeClearCluster(state, orb.clusterId, boostPhase);
+    }
+  }
+}
+
+function maybeFinish(state) {
+  if (state.clustersClearedCount !== state.totalClusters) {
+    return;
+  }
+
+  state.finishBonus = FINISH_BONUS_BASE + Math.round(state.boostMeter * 2) + state.boostWindowsCaptured * 70;
+  state.score += state.finishBonus;
+  state.mode = 'finished';
+  state.input.boostPressed = false;
+  state.message = `Arena cleared in ${(state.elapsedMs / 1000).toFixed(2)}s with ${state.boostWindowsCaptured} pulse bonuses.`;
+}
+
+function maybeCrashOnWalls(state) {
+  const head = state.player.segments[0];
+  if (
+    head.x < WORLD.arena.left + PLAYER_RADIUS ||
+    head.x > WORLD.arena.right - PLAYER_RADIUS ||
+    head.y < WORLD.arena.top + PLAYER_RADIUS ||
+    head.y > WORLD.arena.bottom - PLAYER_RADIUS
+  ) {
+    crash(state, 'The head clipped the arena wall.');
+  }
+}
+
+function maybeCrashOnRivals(state) {
+  if (state.mode !== 'running') {
+    return;
+  }
+
+  const head = state.player.segments[0];
+  for (const rival of state.rivals) {
+    for (let index = 2; index < rival.segments.length; index += 1) {
+      if (distance(head, rival.segments[index]) <= PLAYER_RADIUS * 1.55) {
+        crash(state, `The head clipped ${rival.label}.`);
+        return;
+      }
+    }
+  }
+}
+
+function setPulseCue(state, boostPhase) {
+  if (boostPhase.active && boostPhase.pulseIndex !== state.lastPulseCueIndex) {
+    state.lastPulseCueIndex = boostPhase.pulseIndex;
+    state.message = 'Pulse window open. Boost charge is refilling fast.';
+  }
+}
+
+function updateRunning(state, dt) {
+  state.elapsedMs += dt * 1000;
+  const boostPhase = getBoostPhase(state.elapsedMs);
+  setPulseCue(state, boostPhase);
+
+  if (boostPhase.active) {
+    state.boostMeter = Math.min(MAX_BOOST, state.boostMeter + BOOST_RECHARGE_PER_SECOND * dt);
+  }
+
+  const head = state.player.segments[0];
+  const desiredAngle = Math.atan2(state.pointerTarget.y - head.y, state.pointerTarget.x - head.x);
+  state.player.angle = rotateToward(state.player.angle, desiredAngle, state.player.turnRate * dt);
+
+  const boosting = state.input.boostPressed && state.boostMeter > 0;
+  if (boosting) {
+    state.boostMeter = Math.max(0, state.boostMeter - BOOST_DRAIN_PER_SECOND * dt);
+    state.boostUseMs += dt * 1000;
+    if (state.boostMeter === 0) {
+      state.input.boostPressed = false;
+    }
+  }
+
+  state.player.speed = currentPlayerSpeed(state);
+  head.x += Math.cos(state.player.angle) * state.player.speed * dt;
+  head.y += Math.sin(state.player.angle) * state.player.speed * dt;
+  followSegments(state.player);
+
+  for (const rival of state.rivals) {
+    moveRival(rival, dt);
+  }
+
+  maybeCrashOnWalls(state);
+  maybeCrashOnRivals(state);
+  if (state.mode !== 'running') {
+    return;
+  }
+
+  maybeCollectOrbs(state, boostPhase);
+  maybeFinish(state);
+}
+
+function sampleBody(body, stride = 3) {
+  return body
+    .filter((_, index) => index === 0 || index === body.length - 1 || index % stride === 0)
+    .map((segment) => ({
+      x: round(segment.x, 1),
+      y: round(segment.y, 1),
+    }));
+}
+
+function describeCluster(state, cluster) {
+  const remainingOrbs = state.orbs
+    .filter((orb) => orb.clusterId === cluster.id && !orb.collected)
+    .map((orb) => ({
+      x: round(orb.x, 1),
+      y: round(orb.y, 1),
+    }));
+
+  return {
+    id: cluster.id,
+    label: cluster.label,
+    x: cluster.x,
+    y: cluster.y,
+    cleared: remainingOrbs.length === 0,
+    remaining: remainingOrbs.length,
+    remainingOrbs,
+  };
 }
 
 function createSnapshot(state) {
-  const visibleObstacles = OBSTACLE_DEFS.map((obstacle) => describeObstacle(state, obstacle))
-    .filter((obstacle) => obstacle.screenX + obstacle.width >= -48 && obstacle.screenX <= WORLD.width + 96);
-
-  const visibleRings = OBSTACLE_DEFS.map((obstacle) => describeRing(state, obstacle))
-    .filter(Boolean)
-    .filter((ring) => ring.screenX + ring.radius >= -32 && ring.screenX - ring.radius <= WORLD.width + 32);
-
+  const boostPhase = getBoostPhase(state.elapsedMs);
   return {
     seed: state.seed,
     mode: state.mode,
     elapsedMs: Math.round(state.elapsedMs),
-    distance: round(state.distance, 2),
-    progress: round((state.distance / WORLD.finishDistance) * 100, 2),
     score: Math.round(state.score),
     finishBonus: Math.round(state.finishBonus),
     combo: state.combo,
     peakCombo: state.peakCombo,
-    clearedCount: state.clearedCount,
-    totalObstacles: state.totalObstacles,
-    ringsCollectedCount: state.ringsCollectedCount,
-    totalRings: state.totalRings,
-    speed: round(currentSpeed(state)),
+    orbsCollectedCount: state.orbsCollectedCount,
+    totalOrbs: state.totalOrbs,
+    clustersClearedCount: state.clustersClearedCount,
+    totalClusters: state.totalClusters,
+    boost: {
+      meter: round(state.boostMeter, 1),
+      active: boostPhase.active,
+      progress: round(boostPhase.progress, 3),
+      pulseIndex: boostPhase.pulseIndex,
+      msUntilPhaseChange: Math.round(boostPhase.msUntilPhaseChange),
+      useMs: Math.round(state.boostUseMs),
+      capturedWindows: state.boostWindowsCaptured,
+    },
     message: state.message,
     lastCrashReason: state.lastCrashReason,
-    pulseBeat: round(triangleWave(state.elapsedMs, 980, 140), 3),
-    player: {
-      x: round(state.player.x, 2),
-      y: round(state.player.y, 2),
-      width: state.player.width,
-      height: state.player.height,
-      vy: round(state.player.vy, 2),
-      grounded: state.player.grounded,
-      jumps: state.player.jumps,
-      bottom: round(state.player.y + state.player.height, 2),
+    pointerTarget: {
+      x: round(state.pointerTarget.x, 1),
+      y: round(state.pointerTarget.y, 1),
     },
     world: {
       width: WORLD.width,
       height: WORLD.height,
-      groundY: WORLD.groundY,
-      finishDistance: WORLD.finishDistance,
+      arena: { ...WORLD.arena },
       coordinateSystem: 'origin top-left, x increases right, y increases down',
     },
-    upcoming: visibleObstacles.slice(0, 4),
-    rings: visibleRings.slice(0, 4),
+    player: {
+      x: round(state.player.segments[0].x, 1),
+      y: round(state.player.segments[0].y, 1),
+      angle: round(state.player.angle, 3),
+      speed: round(state.player.speed, 1),
+      boosting: state.input.boostPressed && state.boostMeter > 0,
+      length: state.player.segments.length,
+      radius: PLAYER_RADIUS,
+      body: state.player.segments.map((segment) => ({
+        x: round(segment.x, 1),
+        y: round(segment.y, 1),
+      })),
+    },
+    rivals: state.rivals.map((rival) => ({
+      id: rival.id,
+      label: rival.label,
+      color: rival.color,
+      x: round(rival.segments[0].x, 1),
+      y: round(rival.segments[0].y, 1),
+      angle: round(rival.angle, 3),
+      speed: rival.speed,
+      body: rival.segments.map((segment) => ({
+        x: round(segment.x, 1),
+        y: round(segment.y, 1),
+      })),
+    })),
+    clusters: CLUSTERS.map((cluster) => describeCluster(state, cluster)),
   };
-}
-
-function currentSpeed(state) {
-  const distanceBoost = Math.min(72, state.distance * 0.012);
-  const pulseBoost = triangleWave(state.elapsedMs, 1600, 240) * 20;
-  return BASE_SPEED + distanceBoost + pulseBoost;
-}
-
-function describeObstacle(state, obstacle) {
-  const obstacleScreenX = obstacle.x - state.distance;
-  const segmentStates = obstacle.segments.map((segment) => {
-    const { pulse, height } = resolveSegmentHeight(segment, state.elapsedMs, obstacleScreenX);
-    return {
-      offsetX: segment.offsetX,
-      width: segment.width,
-      height: round(height, 2),
-      top: round(WORLD.groundY - height, 2),
-      pulse: round(pulse, 3),
-    };
-  });
-
-  const width = obstacle.segments.reduce((maxWidth, segment) => Math.max(maxWidth, segment.offsetX + segment.width), 0);
-  const maxHeight = Math.max(...segmentStates.map((segment) => segment.height));
-  return {
-    id: obstacle.id,
-    label: obstacle.label,
-    screenX: round(obstacle.x - state.distance, 2),
-    width,
-    jumpCue: obstacle.jumpCue,
-    cleared: state.clearedObstacleIds.includes(obstacle.id),
-    maxHeight: round(maxHeight, 2),
-    segments: segmentStates,
-  };
-}
-
-function describeRing(state, obstacle) {
-  if (!obstacle.ring || state.collectedRingIds.includes(`${obstacle.id}-ring`)) {
-    return null;
-  }
-
-  return {
-    id: `${obstacle.id}-ring`,
-    screenX: round(obstacle.ring.x - state.distance, 2),
-    y: obstacle.ring.y,
-    radius: obstacle.ring.radius,
-  };
-}
-
-function queueJump(state) {
-  state.player.jumpBufferMs = JUMP_BUFFER_MS;
-}
-
-function performJump(state) {
-  state.player.vy = JUMP_VELOCITY;
-  state.player.grounded = false;
-  state.player.coyoteMs = 0;
-  state.player.jumpBufferMs = 0;
-  state.player.jumps += 1;
-  state.flashMs = 90;
-}
-
-function attemptBufferedJump(state) {
-  if (state.player.jumpBufferMs <= 0) {
-    return;
-  }
-
-  if (state.player.grounded || state.player.coyoteMs > 0) {
-    performJump(state);
-  }
-}
-
-function resetForRun(state, nextMode = 'title') {
-  const seed = state.seed;
-  const initial = createInitialState(seed);
-  initial.mode = nextMode;
-  initial.message =
-    nextMode === 'running'
-      ? 'Run live. Jump into the safe phase of each pulse lane.'
-      : initial.message;
-  return initial;
-}
-
-function rectsIntersect(a, b) {
-  return a.x < b.x + b.width && a.x + a.width > b.x && a.y < b.y + b.height && a.y + a.height > b.y;
-}
-
-function collectRingIfNeeded(state, obstacle) {
-  if (!obstacle.ring) {
-    return;
-  }
-
-    const ringId = `${obstacle.id}-ring`;
-  if (state.collectedRingIds.includes(ringId)) {
-    return;
-  }
-
-  const ringScreenX = obstacle.ring.x - state.distance;
-  const playerCenterX = state.player.x + state.player.width / 2;
-  const playerCenterY = state.player.y + state.player.height / 2;
-  const dx = playerCenterX - ringScreenX;
-  const dy = playerCenterY - obstacle.ring.y;
-  const radius = obstacle.ring.radius + 22;
-
-  if (dx * dx + dy * dy <= radius * radius) {
-    state.collectedRingIds.push(ringId);
-    state.ringsCollectedCount += 1;
-    state.score += 120;
-    state.message = `Captured pulse ring ${state.ringsCollectedCount}/${state.totalRings}.`;
-  }
-}
-
-function clearObstacleIfNeeded(state, obstacle) {
-  if (state.clearedObstacleIds.includes(obstacle.id)) {
-    return;
-  }
-
-  const obstacleTail = obstacle.x + obstacle.segments.reduce((maxWidth, segment) => Math.max(maxWidth, segment.offsetX + segment.width), 0);
-  if (obstacleTail - state.distance < state.player.x - 20) {
-    state.clearedObstacleIds.push(obstacle.id);
-    state.clearedCount += 1;
-    state.combo += 1;
-    state.peakCombo = Math.max(state.peakCombo, state.combo);
-    state.score += 90 + state.combo * 14;
-    state.message = `${obstacle.label} cleared. Combo ${state.combo}.`;
-  }
-}
-
-function handleObstacleCollision(state, obstacle) {
-  if (state.clearedObstacleIds.includes(obstacle.id)) {
-    return false;
-  }
-
-  const playerRect = {
-    x: state.player.x + 4,
-    y: state.player.y + 4,
-    width: state.player.width - 8,
-    height: state.player.height - 8,
-  };
-
-  for (const segment of obstacle.segments) {
-    const obstacleScreenX = obstacle.x - state.distance;
-    const { height } = resolveSegmentHeight(segment, state.elapsedMs, obstacleScreenX);
-    const rect = {
-      x: obstacleScreenX + segment.offsetX,
-      y: WORLD.groundY - height,
-      width: segment.width,
-      height,
-    };
-    if (rectsIntersect(playerRect, rect)) {
-      state.mode = 'crashed';
-      state.combo = 0;
-      state.lastCrashReason = `${obstacle.label} clipped the runner.`;
-      state.message = state.lastCrashReason;
-      return true;
-    }
-  }
-
-  return false;
-}
-
-function finishRun(state) {
-  state.mode = 'finished';
-  state.finishBonus = Math.max(260, 1320 - Math.round(state.elapsedMs / 7)) + state.ringsCollectedCount * 30 + state.peakCombo * 18;
-  state.score += state.finishBonus;
-  state.message = `Finish surge complete in ${(state.elapsedMs / 1000).toFixed(2)}s.`;
-}
-
-function applySimulationStep(state, stepMs) {
-  const dtSeconds = stepMs / 1000;
-  const speed = currentSpeed(state);
-  state.elapsedMs += stepMs;
-  state.flashMs = Math.max(0, state.flashMs - stepMs);
-
-  state.player.jumpBufferMs = Math.max(0, state.player.jumpBufferMs - stepMs);
-  state.player.coyoteMs = state.player.grounded ? COYOTE_MS : Math.max(0, state.player.coyoteMs - stepMs);
-  attemptBufferedJump(state);
-
-  state.distance += speed * dtSeconds;
-  state.player.vy += GRAVITY * dtSeconds;
-  state.player.y += state.player.vy * dtSeconds;
-
-  const groundTop = stateGroundTop();
-  if (state.player.y >= groundTop) {
-    state.player.y = groundTop;
-    state.player.vy = 0;
-    state.player.grounded = true;
-    state.player.coyoteMs = COYOTE_MS;
-  } else {
-    state.player.grounded = false;
-  }
-
-  for (const obstacle of OBSTACLE_DEFS) {
-    collectRingIfNeeded(state, obstacle);
-    if (handleObstacleCollision(state, obstacle)) {
-      return;
-    }
-    clearObstacleIfNeeded(state, obstacle);
-  }
-
-  const distanceScore = Math.floor(state.distance * 0.16);
-  state.score = Math.max(state.score, distanceScore + state.ringsCollectedCount * 120 + state.clearedCount * 90 + state.peakCombo * 20);
-
-  if (state.distance >= WORLD.finishDistance) {
-    finishRun(state);
-  }
 }
 
 export function renderGameToText(snapshot) {
-  const view = snapshot.upcoming.map((obstacle) => ({
-    id: obstacle.id,
-    label: obstacle.label,
-    screenX: obstacle.screenX,
-    width: obstacle.width,
-    jumpCue: obstacle.jumpCue,
-    maxHeight: obstacle.maxHeight,
-    cleared: obstacle.cleared,
-    segments: obstacle.segments.map((segment) => ({
-      x: round(obstacle.screenX + segment.offsetX, 2),
-      width: segment.width,
-      top: segment.top,
-      height: segment.height,
-    })),
-  }));
-
-  return JSON.stringify(
-    {
-      mode: snapshot.mode,
-      score: snapshot.score,
-      progress: snapshot.progress,
-      elapsedMs: snapshot.elapsedMs,
-      speed: snapshot.speed,
-      message: snapshot.message,
-      lastCrashReason: snapshot.lastCrashReason,
-      clearedCount: snapshot.clearedCount,
-      totalObstacles: snapshot.totalObstacles,
-      ringsCollectedCount: snapshot.ringsCollectedCount,
-      totalRings: snapshot.totalRings,
-      world: snapshot.world,
-      player: snapshot.player,
-      upcoming: view,
-      rings: snapshot.rings,
-      counters: {
-        cleared: `${snapshot.clearedCount}/${snapshot.totalObstacles}`,
-        rings: `${snapshot.ringsCollectedCount}/${snapshot.totalRings}`,
-        combo: snapshot.combo,
-        peakCombo: snapshot.peakCombo,
-      },
+  const payload = {
+    mode: snapshot.mode,
+    score: snapshot.score,
+    combo: snapshot.combo,
+    elapsedMs: snapshot.elapsedMs,
+    player: {
+      x: snapshot.player.x,
+      y: snapshot.player.y,
+      angle: snapshot.player.angle,
+      speed: snapshot.player.speed,
+      boosting: snapshot.player.boosting,
+      length: snapshot.player.length,
+      bodySample: sampleBody(snapshot.player.body, 4),
     },
-    null,
-    2
-  );
+    boost: snapshot.boost,
+    clusters: snapshot.clusters.map((cluster) => ({
+      id: cluster.id,
+      remaining: cluster.remaining,
+      cleared: cluster.cleared,
+      x: cluster.x,
+      y: cluster.y,
+    })),
+    pointerTarget: snapshot.pointerTarget,
+    rivals: snapshot.rivals.map((rival) => ({
+      id: rival.id,
+      x: rival.x,
+      y: rival.y,
+      bodySample: sampleBody(rival.body, 4),
+    })),
+    world: snapshot.world,
+    message: snapshot.message,
+    lastCrashReason: snapshot.lastCrashReason,
+  };
+
+  return JSON.stringify(payload);
 }
 
-export function createGame({ seed = 20260513 } = {}) {
-  let state = createInitialState(seed);
-  let accumulatorMs = 0;
+export function createGame({ seed = 20260515 } = {}) {
+  let state = {
+    ...createInitialState(seed),
+    completedClusters: new Set(),
+  };
 
-  function advance(ms) {
-    if (state.mode === 'title' || state.mode === 'paused' || state.mode === 'finished' || state.mode === 'crashed') {
-      return createSnapshot(state);
-    }
-
-    accumulatorMs += ms;
-    while (accumulatorMs >= FIXED_STEP_MS && state.mode === 'running') {
-      applySimulationStep(state, FIXED_STEP_MS);
-      accumulatorMs -= FIXED_STEP_MS;
-    }
-    return createSnapshot(state);
-  }
-
-  function getState() {
-    return createSnapshot(state);
+  function reset() {
+    state = {
+      ...createInitialState(seed),
+      completedClusters: new Set(),
+    };
   }
 
   return {
-    getState,
-    advance,
-    queueJump() {
-      if (state.mode === 'title') {
-        state = resetForRun(state, 'running');
-      }
-      if (state.mode === 'crashed' || state.mode === 'finished') {
-        state = resetForRun(state, 'running');
-      }
-      if (state.mode !== 'running') {
-        return createSnapshot(state);
-      }
-      queueJump(state);
-      attemptBufferedJump(state);
+    getState() {
       return createSnapshot(state);
+    },
+    setPointerTarget(x, y) {
+      state.pointerTarget = {
+        x: clamp(x, WORLD.arena.left + 12, WORLD.arena.right - 12),
+        y: clamp(y, WORLD.arena.top + 12, WORLD.arena.bottom - 12),
+      };
+    },
+    setBoostPressed(value) {
+      state.input.boostPressed = Boolean(value);
     },
     startOrRestart() {
       if (state.mode === 'paused') {
         state.mode = 'running';
-        state.message = 'Run resumed.';
+        state.message = 'Back in motion. Catch the next pulse window.';
         return createSnapshot(state);
       }
-      if (state.mode === 'running') {
-        return createSnapshot(state);
-      }
-      state = resetForRun(state, 'running');
-      accumulatorMs = 0;
+
+      reset();
+      state.mode = 'running';
+      state.message = 'Route open. Sweep the outer ring and spend boost on the pulse.';
       return createSnapshot(state);
     },
     togglePause() {
       if (state.mode === 'running') {
         state.mode = 'paused';
-        state.message = 'Pulse lanes paused.';
+        state.input.boostPressed = false;
+        state.message = 'Paused. The arena pulse is frozen.';
       } else if (state.mode === 'paused') {
         state.mode = 'running';
-        state.message = 'Run resumed.';
+        state.message = 'Back in motion. Catch the next pulse window.';
       }
       return createSnapshot(state);
     },
     resetToTitle() {
-      state = resetForRun(state, 'title');
-      accumulatorMs = 0;
+      reset();
+      return createSnapshot(state);
+    },
+    advance(ms) {
+      const totalMs = Math.max(0, ms);
+      const steps = Math.max(1, Math.round(totalMs / FIXED_STEP_MS));
+      const stepSeconds = totalMs / steps / 1000;
+
+      if (state.mode !== 'running') {
+        return createSnapshot(state);
+      }
+
+      for (let index = 0; index < steps; index += 1) {
+        if (state.mode !== 'running') {
+          break;
+        }
+        updateRunning(state, stepSeconds);
+      }
+
       return createSnapshot(state);
     },
   };

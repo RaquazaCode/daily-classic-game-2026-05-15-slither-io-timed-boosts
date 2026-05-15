@@ -11,11 +11,11 @@ app.innerHTML = `
     <section class="hero-card">
       <div class="copy">
         <p class="eyebrow">Daily Classic Game</p>
-        <h1>Endless Jumper: Dynamic Obstacles</h1>
+        <h1>Slither.io: Timed Boosts</h1>
         <p class="lede">
-          Sprint through a skyline of pulse lanes that rise and fall on fixed
-          rhythms. The route is deterministic, but each jump still has to hit
-          the open phase.
+          Trace a clean line through the arena, grow on fixed orb clusters, and
+          spend speed only when the pulse window lights up. Rival patrols never
+          change, so the tension is in how precisely you cut the route.
         </p>
         <div class="controls">
           <button data-action="start">Start / Restart</button>
@@ -23,7 +23,8 @@ app.innerHTML = `
           <button data-action="reset">Reset</button>
         </div>
         <ul class="legend">
-          <li><strong>Jump</strong> Space, W, ArrowUp</li>
+          <li><strong>Steer</strong> Move the mouse or tap arrow keys / WASD</li>
+          <li><strong>Boost</strong> Hold Space during pulse windows</li>
           <li><strong>Pause</strong> P</li>
           <li><strong>Reset</strong> R</li>
           <li><strong>Fullscreen</strong> F</li>
@@ -37,10 +38,10 @@ app.innerHTML = `
       <div class="stats">
         <div><span>Mode</span><strong data-stat="mode"></strong></div>
         <div><span>Score</span><strong data-stat="score"></strong></div>
-        <div><span>Progress</span><strong data-stat="progress"></strong></div>
-        <div><span>Cleared</span><strong data-stat="cleared"></strong></div>
-        <div><span>Rings</span><strong data-stat="rings"></strong></div>
-        <div><span>Speed</span><strong data-stat="speed"></strong></div>
+        <div><span>Length</span><strong data-stat="length"></strong></div>
+        <div><span>Clusters</span><strong data-stat="clusters"></strong></div>
+        <div><span>Boost</span><strong data-stat="boost"></strong></div>
+        <div><span>Pulse</span><strong data-stat="pulse"></strong></div>
       </div>
       <p class="message" data-message></p>
       <pre class="telemetry" data-telemetry></pre>
@@ -48,7 +49,7 @@ app.innerHTML = `
   </main>
 `;
 
-const game = createGame({ seed: 20260513 });
+const game = createGame({ seed: 20260515 });
 const canvas = document.querySelector('#game-canvas');
 const ctx = canvas.getContext('2d');
 const telemetry = document.querySelector('[data-telemetry]');
@@ -56,16 +57,17 @@ const message = document.querySelector('[data-message]');
 const statElements = {
   mode: document.querySelector('[data-stat="mode"]'),
   score: document.querySelector('[data-stat="score"]'),
-  progress: document.querySelector('[data-stat="progress"]'),
-  cleared: document.querySelector('[data-stat="cleared"]'),
-  rings: document.querySelector('[data-stat="rings"]'),
-  speed: document.querySelector('[data-stat="speed"]'),
+  length: document.querySelector('[data-stat="length"]'),
+  clusters: document.querySelector('[data-stat="clusters"]'),
+  boost: document.querySelector('[data-stat="boost"]'),
+  pulse: document.querySelector('[data-stat="pulse"]'),
 };
 
 const startButton = document.querySelector('[data-action="start"]');
 const pauseButton = document.querySelector('[data-action="pause"]');
 const resetButton = document.querySelector('[data-action="reset"]');
 
+let lastSnapshot = game.getState();
 let lastTimestamp = performance.now();
 
 function drawRoundedRect(x, y, width, height, radius, fillStyle, strokeStyle = null) {
@@ -92,136 +94,180 @@ function drawRoundedRect(x, y, width, height, radius, fillStyle, strokeStyle = n
 
 function drawBackdrop(snapshot) {
   const sky = ctx.createLinearGradient(0, 0, 0, WORLD.height);
-  sky.addColorStop(0, '#fff8d6');
-  sky.addColorStop(0.42, '#ffd2a8');
-  sky.addColorStop(1, '#243a73');
+  sky.addColorStop(0, '#fff4d1');
+  sky.addColorStop(0.45, '#d6fff2');
+  sky.addColorStop(1, '#0f3950');
   ctx.fillStyle = sky;
   ctx.fillRect(0, 0, WORLD.width, WORLD.height);
 
-  ctx.fillStyle = 'rgba(255, 241, 171, 0.68)';
-  ctx.beginPath();
-  ctx.arc(740, 104, 68, 0, Math.PI * 2);
-  ctx.fill();
-
-  for (let index = 0; index < 12; index += 1) {
-    const stripX = ((index * 120) - (snapshot.distance * 0.24)) % (WORLD.width + 120);
-    ctx.fillStyle = index % 2 === 0 ? 'rgba(255,255,255,0.09)' : 'rgba(45,77,128,0.14)';
-    ctx.fillRect(stripX - 120, 0, 72, WORLD.height);
+  for (let index = 0; index < 10; index += 1) {
+    const waveX = (index * 118 + snapshot.elapsedMs * 0.03) % (WORLD.width + 160);
+    ctx.fillStyle = index % 2 === 0 ? 'rgba(255, 255, 255, 0.16)' : 'rgba(31, 121, 140, 0.1)';
+    ctx.beginPath();
+    ctx.ellipse(waveX - 60, 80 + index * 22, 92, 22, 0.15, 0, Math.PI * 2);
+    ctx.fill();
   }
 
-  for (let layer = 0; layer < 3; layer += 1) {
-    const baseY = 248 + layer * 46;
-    const height = 120 - layer * 18;
-    const speed = 0.12 + layer * 0.05;
-    ctx.fillStyle = layer === 0 ? 'rgba(53, 88, 140, 0.18)' : layer === 1 ? 'rgba(37, 59, 104, 0.28)' : 'rgba(22, 34, 69, 0.4)';
-    for (let x = -60; x < WORLD.width + 120; x += 88) {
-      const drift = ((x - snapshot.distance * speed) % (WORLD.width + 120)) - 60;
-      const towerHeight = height + ((x / 44 + layer * 13) % 3) * 20;
-      ctx.fillRect(drift, baseY - towerHeight, 54, towerHeight);
-    }
+  ctx.fillStyle = 'rgba(255, 244, 200, 0.58)';
+  ctx.beginPath();
+  ctx.arc(800, 106, 64, 0, Math.PI * 2);
+  ctx.fill();
+}
+
+function drawArena(snapshot) {
+  const { arena } = snapshot.world;
+  const panel = ctx.createLinearGradient(arena.left, arena.top, arena.right, arena.bottom);
+  panel.addColorStop(0, '#103d49');
+  panel.addColorStop(0.55, '#145c66');
+  panel.addColorStop(1, '#103947');
+  drawRoundedRect(
+    arena.left,
+    arena.top,
+    arena.right - arena.left,
+    arena.bottom - arena.top,
+    32,
+    panel,
+    'rgba(255, 255, 255, 0.28)'
+  );
+
+  const pulseOpacity = snapshot.boost.active ? 0.34 : 0.08;
+  ctx.strokeStyle = `rgba(255, 243, 200, ${pulseOpacity})`;
+  ctx.lineWidth = snapshot.boost.active ? 6 : 2;
+  ctx.strokeRect(arena.left + 10, arena.top + 10, arena.right - arena.left - 20, arena.bottom - arena.top - 20);
+
+  ctx.strokeStyle = 'rgba(181, 255, 244, 0.16)';
+  ctx.lineWidth = 1;
+  for (let x = arena.left + 28; x < arena.right; x += 40) {
+    ctx.beginPath();
+    ctx.moveTo(x, arena.top + 16);
+    ctx.lineTo(x, arena.bottom - 16);
+    ctx.stroke();
+  }
+  for (let y = arena.top + 24; y < arena.bottom; y += 40) {
+    ctx.beginPath();
+    ctx.moveTo(arena.left + 16, y);
+    ctx.lineTo(arena.right - 16, y);
+    ctx.stroke();
+  }
+
+  if (snapshot.boost.active) {
+    const pulseX = arena.left + 20 + snapshot.boost.progress * (arena.right - arena.left - 40);
+    ctx.fillStyle = 'rgba(255, 241, 166, 0.18)';
+    ctx.fillRect(pulseX - 26, arena.top + 14, 52, arena.bottom - arena.top - 28);
   }
 }
 
-function drawGround(snapshot) {
-  const laneGradient = ctx.createLinearGradient(0, WORLD.groundY - 44, 0, WORLD.height);
-  laneGradient.addColorStop(0, '#21435d');
-  laneGradient.addColorStop(1, '#102233');
-  ctx.fillStyle = laneGradient;
-  ctx.fillRect(0, WORLD.groundY, WORLD.width, WORLD.height - WORLD.groundY);
+function drawPointer(snapshot) {
+  if (snapshot.mode !== 'running' && snapshot.mode !== 'paused') {
+    return;
+  }
 
-  ctx.fillStyle = 'rgba(255, 203, 97, 0.18)';
-  ctx.fillRect(0, WORLD.groundY - 12, WORLD.width, 12);
-
-  ctx.strokeStyle = 'rgba(255, 236, 171, 0.6)';
+  ctx.save();
+  ctx.strokeStyle = snapshot.boost.active ? '#fff1a7' : 'rgba(245, 255, 251, 0.55)';
+  ctx.setLineDash([6, 8]);
   ctx.lineWidth = 2;
-  for (let x = -80; x < WORLD.width + 120; x += 64) {
-    const drift = ((x - snapshot.distance * 0.8) % (WORLD.width + 120)) - 40;
-    ctx.beginPath();
-    ctx.moveTo(drift, WORLD.groundY + 4);
-    ctx.lineTo(drift + 38, WORLD.groundY + 24);
-    ctx.stroke();
-  }
+  ctx.beginPath();
+  ctx.arc(snapshot.pointerTarget.x, snapshot.pointerTarget.y, 18, 0, Math.PI * 2);
+  ctx.stroke();
+  ctx.setLineDash([]);
+  ctx.restore();
 }
 
-function drawRings(snapshot) {
-  for (const ring of snapshot.rings) {
-    ctx.save();
-    ctx.translate(ring.screenX, ring.y);
-    ctx.strokeStyle = '#fff6b1';
-    ctx.lineWidth = 5;
+function drawClusters(snapshot) {
+  for (const cluster of snapshot.clusters) {
+    ctx.strokeStyle = cluster.cleared ? 'rgba(240, 255, 249, 0.18)' : 'rgba(255, 255, 255, 0.24)';
+    ctx.lineWidth = cluster.cleared ? 1 : 2;
     ctx.beginPath();
-    ctx.arc(0, 0, ring.radius, 0, Math.PI * 2);
+    ctx.arc(cluster.x, cluster.y, 36, 0, Math.PI * 2);
     ctx.stroke();
-    ctx.strokeStyle = 'rgba(255, 255, 255, 0.55)';
-    ctx.lineWidth = 2;
-    ctx.beginPath();
-    ctx.arc(0, 0, ring.radius + 7, 0, Math.PI * 2);
-    ctx.stroke();
-    ctx.restore();
-  }
-}
 
-function drawObstacles(snapshot) {
-  for (const obstacle of snapshot.upcoming) {
-    const labelX = obstacle.screenX + obstacle.width / 2;
-    ctx.fillStyle = 'rgba(255, 232, 196, 0.86)';
-    ctx.font = '12px "Avenir Next Condensed", "Trebuchet MS", sans-serif';
-    ctx.textAlign = 'center';
-    ctx.fillText(obstacle.label, labelX, 34);
-
-    for (const segment of obstacle.segments) {
-      const segmentX = obstacle.screenX + segment.offsetX;
-      const segmentY = WORLD.groundY - segment.height;
-      const pulse = segment.pulse;
-      const fill = ctx.createLinearGradient(0, segmentY, 0, WORLD.groundY);
-      fill.addColorStop(0, pulse > 0.65 ? '#f5624d' : '#ff9a5a');
-      fill.addColorStop(1, '#7e223f');
-      drawRoundedRect(segmentX, segmentY, segment.width, segment.height, 12, fill, 'rgba(255, 243, 193, 0.65)');
-      ctx.fillStyle = 'rgba(255, 255, 255, 0.18)';
-      ctx.fillRect(segmentX + 8, segmentY + 10, segment.width - 16, Math.max(8, segment.height * 0.18));
+    if (!cluster.cleared) {
+      ctx.fillStyle = 'rgba(255, 248, 210, 0.72)';
+      ctx.font = '12px "Avenir Next Condensed", "Trebuchet MS", sans-serif';
+      ctx.textAlign = 'center';
+      ctx.fillText(cluster.label, cluster.x, cluster.y - 48);
     }
 
-    ctx.strokeStyle = 'rgba(255, 245, 208, 0.26)';
-    ctx.setLineDash([10, 12]);
-    ctx.beginPath();
-    ctx.moveTo(obstacle.screenX + obstacle.jumpCue, 0);
-    ctx.lineTo(obstacle.screenX + obstacle.jumpCue, WORLD.height);
-    ctx.stroke();
-    ctx.setLineDash([]);
+    for (const orb of cluster.remainingOrbs) {
+      ctx.fillStyle = snapshot.boost.active ? '#fff2a8' : '#f5fff9';
+      ctx.beginPath();
+      ctx.arc(orb.x, orb.y, 8, 0, Math.PI * 2);
+      ctx.fill();
+
+      ctx.fillStyle = snapshot.boost.active ? 'rgba(255, 196, 106, 0.26)' : 'rgba(102, 255, 223, 0.22)';
+      ctx.beginPath();
+      ctx.arc(orb.x, orb.y, 15, 0, Math.PI * 2);
+      ctx.fill();
+    }
   }
 }
 
-function drawPlayer(snapshot) {
-  const { player } = snapshot;
-  const flash = snapshot.mode === 'running' && snapshot.player.grounded ? snapshot.pulseBeat * 0.2 : 0.1;
-  const bodyGradient = ctx.createLinearGradient(player.x, player.y, player.x, player.y + player.height);
-  bodyGradient.addColorStop(0, '#1df0d8');
-  bodyGradient.addColorStop(1, '#149ca4');
-  drawRoundedRect(player.x, player.y + 10, player.width, player.height - 10, 18, bodyGradient, 'rgba(255,255,255,0.45)');
-
-  ctx.fillStyle = '#081d2f';
-  ctx.beginPath();
-  ctx.arc(player.x + player.width * 0.62, player.y + 18, 16, Math.PI, Math.PI * 2);
-  ctx.fill();
-
-  ctx.fillStyle = '#ffe7b5';
-  ctx.beginPath();
-  ctx.arc(player.x + player.width * 0.62, player.y + 22, 12, 0, Math.PI * 2);
-  ctx.fill();
-
-  ctx.fillStyle = `rgba(255, 252, 188, ${0.22 + flash})`;
-  ctx.beginPath();
-  ctx.ellipse(player.x - 18, player.y + player.height - 10, 26, 10, 0, 0, Math.PI * 2);
-  ctx.fill();
-
-  if (!player.grounded) {
-    ctx.strokeStyle = 'rgba(255, 255, 255, 0.48)';
-    ctx.lineWidth = 3;
-    ctx.beginPath();
-    ctx.moveTo(player.x + 12, player.y + player.height - 8);
-    ctx.lineTo(player.x - 26, player.y + player.height + 16);
-    ctx.stroke();
+function drawSnake(body, color, headColor, width) {
+  if (body.length < 2) {
+    return;
   }
+
+  ctx.lineCap = 'round';
+  ctx.lineJoin = 'round';
+  ctx.strokeStyle = color;
+  ctx.lineWidth = width;
+  ctx.beginPath();
+  ctx.moveTo(body[body.length - 1].x, body[body.length - 1].y);
+  for (let index = body.length - 2; index >= 0; index -= 1) {
+    ctx.lineTo(body[index].x, body[index].y);
+  }
+  ctx.stroke();
+
+  ctx.strokeStyle = 'rgba(255, 255, 255, 0.18)';
+  ctx.lineWidth = Math.max(4, width * 0.28);
+  ctx.stroke();
+
+  const head = body[0];
+  ctx.fillStyle = headColor;
+  ctx.beginPath();
+  ctx.arc(head.x, head.y, width * 0.46, 0, Math.PI * 2);
+  ctx.fill();
+
+  ctx.fillStyle = '#0b2431';
+  ctx.beginPath();
+  ctx.arc(head.x + width * 0.12, head.y - width * 0.1, width * 0.08, 0, Math.PI * 2);
+  ctx.arc(head.x + width * 0.12, head.y + width * 0.1, width * 0.08, 0, Math.PI * 2);
+  ctx.fill();
+}
+
+function drawSnakes(snapshot) {
+  for (const rival of snapshot.rivals) {
+    drawSnake(rival.body, rival.color, '#fff7ec', 15);
+  }
+  drawSnake(snapshot.player.body, '#1ad0bc', '#eafff7', 18);
+}
+
+function drawHud(snapshot) {
+  drawRoundedRect(108, 82, 218, 82, 22, 'rgba(7, 31, 41, 0.58)', 'rgba(255, 255, 255, 0.18)');
+  ctx.fillStyle = '#f4fff9';
+  ctx.textAlign = 'left';
+  ctx.font = '700 18px "Avenir Next Condensed", "Trebuchet MS", sans-serif';
+  ctx.fillText(`Score ${snapshot.score}`, 128, 114);
+  ctx.font = '600 15px "Trebuchet MS", sans-serif';
+  ctx.fillText(`Length ${snapshot.player.length}`, 128, 138);
+  ctx.fillText(`Clusters ${snapshot.clustersClearedCount}/${snapshot.totalClusters}`, 228, 138);
+
+  const barX = 648;
+  const barY = 90;
+  const barWidth = 184;
+  drawRoundedRect(barX, barY, barWidth, 22, 14, 'rgba(8, 27, 38, 0.52)', 'rgba(255, 255, 255, 0.18)');
+  drawRoundedRect(
+    barX + 4,
+    barY + 4,
+    (barWidth - 8) * (snapshot.boost.meter / 100),
+    14,
+    10,
+    snapshot.boost.active ? '#fff1a7' : '#8aeede'
+  );
+  ctx.fillStyle = '#f5fff6';
+  ctx.textAlign = 'center';
+  ctx.font = '700 14px "Trebuchet MS", sans-serif';
+  ctx.fillText(snapshot.boost.active ? 'Pulse Window Live' : 'Pulse Window Charging', barX + barWidth / 2, 128);
 }
 
 function drawOverlay(snapshot) {
@@ -229,36 +275,37 @@ function drawOverlay(snapshot) {
     return;
   }
 
-  ctx.fillStyle = 'rgba(8, 18, 37, 0.34)';
+  ctx.fillStyle = 'rgba(7, 28, 36, 0.42)';
   ctx.fillRect(0, 0, WORLD.width, WORLD.height);
-  drawRoundedRect(210, 118, 540, 246, 28, 'rgba(255, 251, 241, 0.92)');
-  ctx.fillStyle = '#142644';
+  drawRoundedRect(206, 126, 548, 238, 30, 'rgba(255, 252, 241, 0.94)');
+  ctx.fillStyle = '#123448';
   ctx.textAlign = 'center';
   ctx.font = '700 38px "Avenir Next Condensed", "Trebuchet MS", sans-serif';
 
-  let title = 'Pulse Lane Run';
-  let body = 'Press Enter or Start to begin. Every obstacle moves on a deterministic rhythm.';
+  let title = 'Timed Boost Arena';
+  let body = 'Press Enter or Start to begin. Sweep the outer route and only spend boost when the pulse window opens.';
   if (snapshot.mode === 'paused') {
     title = 'Paused';
-    body = 'Press P or Start to resume. The timer and obstacle pulses stay frozen while paused.';
+    body = 'Press P or Start to resume. The snakes, pulse window, and boost meter are frozen.';
   } else if (snapshot.mode === 'crashed') {
     title = 'Run Wiped';
-    body = `${snapshot.lastCrashReason} Press Enter or Start to rerun the route.`;
+    body = `${snapshot.lastCrashReason} Press Enter or Start to replay the fixed route.`;
   } else if (snapshot.mode === 'finished') {
-    title = 'Finish Surge';
-    body = `Route cleared in ${(snapshot.elapsedMs / 1000).toFixed(2)}s. Press Enter or Start to replay the proof run.`;
+    title = 'Arena Cleared';
+    body = `Finished in ${(snapshot.elapsedMs / 1000).toFixed(2)}s with ${snapshot.boost.capturedWindows} pulse bonuses. Press Enter or Start to replay.`;
   }
 
-  ctx.fillText(title, WORLD.width / 2, 186);
-  ctx.font = '600 19px "Trebuchet MS", sans-serif';
-  ctx.fillStyle = '#2f4d77';
-  wrapCenteredText(body, WORLD.width / 2, 226, 420, 28);
+  ctx.fillText(title, WORLD.width / 2, 198);
+  ctx.font = '600 20px "Trebuchet MS", sans-serif';
+  ctx.fillStyle = '#39596b';
+  wrapCenteredText(body, WORLD.width / 2, 242, 420, 30);
 }
 
 function wrapCenteredText(text, centerX, startY, maxWidth, lineHeight) {
   const words = text.split(' ');
   let line = '';
   let y = startY;
+
   for (const word of words) {
     const testLine = line ? `${line} ${word}` : word;
     if (ctx.measureText(testLine).width > maxWidth && line) {
@@ -269,110 +316,159 @@ function wrapCenteredText(text, centerX, startY, maxWidth, lineHeight) {
       line = testLine;
     }
   }
+
   if (line) {
     ctx.fillText(line, centerX, y);
   }
 }
 
-function render(snapshot) {
+function drawScene(snapshot) {
   drawBackdrop(snapshot);
-  drawGround(snapshot);
-  drawRings(snapshot);
-  drawObstacles(snapshot);
-  drawPlayer(snapshot);
+  drawArena(snapshot);
+  drawPointer(snapshot);
+  drawClusters(snapshot);
+  drawSnakes(snapshot);
+  drawHud(snapshot);
   drawOverlay(snapshot);
+}
+
+function render(snapshot = game.getState()) {
+  lastSnapshot = snapshot;
+  drawScene(snapshot);
 
   statElements.mode.textContent = snapshot.mode;
-  statElements.score.textContent = snapshot.score.toString();
-  statElements.progress.textContent = `${snapshot.progress.toFixed(1)}%`;
-  statElements.cleared.textContent = `${snapshot.clearedCount}/${snapshot.totalObstacles}`;
-  statElements.rings.textContent = `${snapshot.ringsCollectedCount}/${snapshot.totalRings}`;
-  statElements.speed.textContent = `${snapshot.speed.toFixed(0)} px/s`;
+  statElements.score.textContent = String(snapshot.score);
+  statElements.length.textContent = String(snapshot.player.length);
+  statElements.clusters.textContent = `${snapshot.clustersClearedCount}/${snapshot.totalClusters}`;
+  statElements.boost.textContent = `${Math.round(snapshot.boost.meter)}%`;
+  statElements.pulse.textContent = snapshot.boost.active
+    ? `${Math.round(snapshot.boost.msUntilPhaseChange / 100) / 10}s live`
+    : `${Math.round(snapshot.boost.msUntilPhaseChange / 100) / 10}s`;
   message.textContent = snapshot.message;
   telemetry.textContent = renderGameToText(snapshot);
-  pauseButton.textContent = snapshot.mode === 'paused' ? 'Resume' : 'Pause';
 }
 
-function advance(ms) {
-  return render(game.advance(ms));
+function updatePointerFromClient(clientX, clientY) {
+  const rect = canvas.getBoundingClientRect();
+  const x = ((clientX - rect.left) / rect.width) * WORLD.width;
+  const y = ((clientY - rect.top) / rect.height) * WORLD.height;
+  game.setPointerTarget(x, y);
+  render();
 }
 
-function jump() {
-  render(game.queueJump());
+function nudgePointer(dx, dy) {
+  game.setPointerTarget(lastSnapshot.player.x + dx, lastSnapshot.player.y + dy);
+  render();
 }
 
-function startOrRestart() {
+function toggleFullscreen() {
+  if (document.fullscreenElement) {
+    document.exitFullscreen();
+    return;
+  }
+  document.documentElement.requestFullscreen();
+}
+
+startButton.addEventListener('click', () => {
   render(game.startOrRestart());
-}
+});
 
-function togglePause() {
+pauseButton.addEventListener('click', () => {
   render(game.togglePause());
-}
+});
 
-function resetToTitle() {
+resetButton.addEventListener('click', () => {
   render(game.resetToTitle());
-}
+});
 
-startButton.addEventListener('click', startOrRestart);
-pauseButton.addEventListener('click', togglePause);
-resetButton.addEventListener('click', resetToTitle);
+canvas.addEventListener('mousemove', (event) => {
+  updatePointerFromClient(event.clientX, event.clientY);
+});
+
+canvas.addEventListener(
+  'touchmove',
+  (event) => {
+    const touch = event.touches[0];
+    if (!touch) {
+      return;
+    }
+    updatePointerFromClient(touch.clientX, touch.clientY);
+  },
+  { passive: true }
+);
 
 window.addEventListener('keydown', (event) => {
-  if (['Space', 'ArrowUp', 'KeyW'].includes(event.code)) {
+  if (event.code === 'Space') {
     event.preventDefault();
-    if (game.getState().mode === 'title') {
-      game.startOrRestart();
-    }
-    jump();
+    game.setBoostPressed(true);
     return;
   }
-
   if (event.code === 'Enter') {
-    event.preventDefault();
-    startOrRestart();
+    render(game.startOrRestart());
     return;
   }
-
   if (event.code === 'KeyP') {
-    event.preventDefault();
-    togglePause();
+    render(game.togglePause());
     return;
   }
-
   if (event.code === 'KeyR') {
-    event.preventDefault();
-    resetToTitle();
+    render(game.resetToTitle());
+    return;
+  }
+  if (event.code === 'KeyF') {
+    toggleFullscreen();
     return;
   }
 
-  if (event.code === 'KeyF') {
-    event.preventDefault();
-    if (document.fullscreenElement) {
-      document.exitFullscreen();
-    } else {
-      canvas.requestFullscreen?.();
-    }
+  const step = 150;
+  if (event.code === 'ArrowUp' || event.code === 'KeyW') {
+    nudgePointer(0, -step);
+  } else if (event.code === 'ArrowDown' || event.code === 'KeyS') {
+    nudgePointer(0, step);
+  } else if (event.code === 'ArrowLeft' || event.code === 'KeyA') {
+    nudgePointer(-step, 0);
+  } else if (event.code === 'ArrowRight' || event.code === 'KeyD') {
+    nudgePointer(step, 0);
   }
 });
 
-window.render_game_to_text = () => renderGameToText(game.getState());
+window.addEventListener('keyup', (event) => {
+  if (event.code === 'Space') {
+    game.setBoostPressed(false);
+  }
+});
+
 window.advanceTime = (ms) => {
-  render(game.advance(ms));
+  const snapshot = game.advance(ms);
+  render(snapshot);
+  return snapshot;
 };
 
-function frame(now) {
-  const delta = Math.min(48, now - lastTimestamp);
-  lastTimestamp = now;
-  if (!manualClock) {
-    render(game.advance(delta));
-    requestAnimationFrame(frame);
-  }
-}
+window.render_game_to_text = () => renderGameToText(game.getState());
+window.getAutomationState = () => game.getState();
+window.setAutomationPointer = (x, y) => {
+  game.setPointerTarget(x, y);
+  render();
+};
+window.setAutomationBoost = (pressed) => {
+  game.setBoostPressed(pressed);
+};
 
-render(game.getState());
-if (autoStart) {
-  render(game.startOrRestart());
-}
-if (!manualClock) {
+function frame(timestamp) {
+  if (!manualClock) {
+    const delta = Math.min(32, timestamp - lastTimestamp);
+    if (delta > 0) {
+      render(game.advance(delta));
+    }
+  }
+  lastTimestamp = timestamp;
   requestAnimationFrame(frame);
 }
+
+if (autoStart) {
+  render(game.startOrRestart());
+} else {
+  render();
+}
+
+requestAnimationFrame(frame);
