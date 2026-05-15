@@ -2,9 +2,9 @@
   color-scheme: light;
   font-family: "Avenir Next", "Trebuchet MS", sans-serif;
   background:
-    radial-gradient(circle at top left, rgba(255, 250, 216, 0.95), transparent 36%),
-    linear-gradient(180deg, #fff4d6 0%, #f7c8a3 32%, #31508a 100%);
-  color: #132441;
+    radial-gradient(circle at top left, rgba(255, 251, 217, 0.94), transparent 36%),
+    linear-gradient(180deg, #fff7d8 0%, #d8fff1 36%, #173f57 100%);
+  color: #132c3d;
 }
 
 * {
@@ -15,8 +15,9 @@ body {
   margin: 0;
   min-height: 100vh;
   background:
-    radial-gradient(circle at 15% 10%, rgba(255, 248, 211, 0.92), transparent 28%),
-    linear-gradient(180deg, #fff3d8 0%, #ffc9ab 30%, #2b467f 100%);
+    radial-gradient(circle at 18% 12%, rgba(255, 246, 210, 0.9), transparent 28%),
+    radial-gradient(circle at 82% 18%, rgba(179, 255, 239, 0.38), transparent 22%),
+    linear-gradient(180deg, #fff4d8 0%, #defef0 30%, #173f57 100%);
 }
 
 button,
@@ -29,16 +30,16 @@ button {
   border: 0;
   border-radius: 999px;
   padding: 0.85rem 1.25rem;
-  background: linear-gradient(135deg, #173967 0%, #2c7dbf 100%);
-  color: #fff9ee;
+  background: linear-gradient(135deg, #11495a 0%, #1ca58f 100%);
+  color: #f9fff8;
   cursor: pointer;
-  box-shadow: 0 14px 28px rgba(23, 57, 103, 0.22);
+  box-shadow: 0 16px 30px rgba(17, 73, 90, 0.2);
   transition: transform 160ms ease, box-shadow 160ms ease;
 }
 
 button:hover {
   transform: translateY(-1px);
-  box-shadow: 0 18px 32px rgba(23, 57, 103, 0.28);
+  box-shadow: 0 20px 34px rgba(17, 73, 90, 0.24);
 }
 
 button:active {
@@ -54,17 +55,17 @@ button:active {
 
 .hero-card,
 .status-card {
-  background: rgba(255, 251, 243, 0.82);
-  border: 1px solid rgba(255, 255, 255, 0.55);
+  background: rgba(255, 251, 243, 0.84);
+  border: 1px solid rgba(255, 255, 255, 0.58);
   border-radius: 30px;
-  box-shadow: 0 28px 64px rgba(19, 36, 65, 0.18);
-  backdrop-filter: blur(12px);
+  box-shadow: 0 28px 62px rgba(19, 44, 61, 0.18);
+  backdrop-filter: blur(14px);
 }
 
 .hero-card {
   display: grid;
   gap: 20px;
-  grid-template-columns: minmax(280px, 1fr) minmax(0, 1.35fr);
+  grid-template-columns: minmax(300px, 1fr) minmax(0, 1.3fr);
   padding: 22px;
 }
 
@@ -72,29 +73,29 @@ button:active {
   display: grid;
   align-content: start;
   gap: 18px;
-  padding: 10px 6px 10px 8px;
+  padding: 10px 8px;
 }
 
 .eyebrow {
   margin: 0;
   letter-spacing: 0.18em;
   text-transform: uppercase;
-  font-size: 0.76rem;
-  color: #35528b;
+  font-size: 0.74rem;
+  color: #2d6d78;
 }
 
 h1 {
   margin: 0;
-  font-size: clamp(2.4rem, 4vw, 4.6rem);
-  line-height: 0.92;
-  letter-spacing: -0.03em;
+  font-size: clamp(2.5rem, 4.2vw, 4.7rem);
+  line-height: 0.94;
+  letter-spacing: -0.04em;
 }
 
 .lede {
   margin: 0;
-  font-size: 1.02rem;
-  line-height: 1.65;
-  color: #355071;
+  font-size: 1.04rem;
+  line-height: 1.68;
+  color: #385669;
 }
 
 .controls {
@@ -107,7 +108,7 @@ h1 {
   margin: 0;
   padding-left: 1rem;
   line-height: 1.55;
-  color: #355071;
+  color: #355a65;
 }
 
 .stage-wrap {
@@ -117,7 +118,7 @@ h1 {
   padding: 10px;
   background:
     linear-gradient(135deg, rgba(255, 255, 255, 0.46), rgba(255, 255, 255, 0.12)),
-    rgba(15, 25, 49, 0.24);
+    rgba(12, 40, 53, 0.24);
 }
 
 #game-canvas {
@@ -125,7 +126,7 @@ h1 {
   width: 100%;
   height: auto;
   border-radius: 18px;
-  background: #fef5df;
+  background: #fef8e0;
 }
 
 .status-card {
@@ -143,7 +144,7 @@ h1 {
 .stats div {
   padding: 12px 14px;
   border-radius: 20px;
-  background: rgba(255, 255, 255, 0.7);
+  background: rgba(255, 255, 255, 0.72);
 }
 
 .stats span {
@@ -151,7 +152,7 @@ h1 {
   font-size: 0.72rem;
   text-transform: uppercase;
   letter-spacing: 0.12em;
-  color: #5e7694;
+  color: #5c7681;
   margin-bottom: 6px;
 }
 
@@ -162,18 +163,18 @@ h1 {
 .message {
   margin: 0;
   font-size: 1rem;
-  color: #27425f;
+  color: #274e5d;
 }
 
 .telemetry {
   margin: 0;
   min-height: 154px;
-  max-height: 300px;
+  max-height: 320px;
   overflow: auto;
   padding: 16px;
   border-radius: 22px;
-  background: rgba(11, 25, 43, 0.9);
-  color: #d7f2ff;
+  background: rgba(8, 29, 40, 0.92);
+  color: #d7fff4;
   font-family: "SFMono-Regular", "Menlo", monospace;
   font-size: 0.76rem;
   line-height: 1.5;
